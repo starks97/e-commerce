@@ -165,7 +165,7 @@ export const theme = extendTheme({
             },
           },
         }),
-        customEffect: (theme: StyleFunctionProps) => ({
+        AnimatedEffect: (theme: StyleFunctionProps) => ({
           "&:before": {
             position: "absolute",
             content: '""',
