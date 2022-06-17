@@ -12,6 +12,8 @@ import {
 
 import { initialData } from "../../database/products";
 import ProductSlideShow from "./ProductSlideShow";
+import { ItemCounter } from "../ui";
+import SizeSelector from './SizeSelector'
 
 const product = initialData.products[0];
 
@@ -34,7 +36,7 @@ export default function ProductSelected() {
 
         <GridItem justifyContent="center" alignItems="center">
           <Flex flexDirection="column">
-            <Text fontSize="xl" fontFamily="Less" fontWeight="bold">
+            <Text fontSize="2xl" fontFamily="Less" fontWeight="bold">
               {product.title}
             </Text>
             <br />
@@ -42,13 +44,14 @@ export default function ProductSelected() {
               {`$${product.price}`}
             </Text>
           </Flex>
+          <SizeSelector selectedSize={product.sizes[2]} sizes={product.sizes} />
 
           {/*quantity */}
-          <Flex sx={{ my: 7 }}>
-            <Text fontSize="lg" fontFamily="Less">
-              quantity
+          <Flex sx={{ my: 7 }} alignItems="center" gap={2}>
+            <Text fontSize="xl" fontFamily="Less" fontWeight="light">
+              Quantity
             </Text>
-            {/*Item Counter*/}
+            <ItemCounter />
           </Flex>
 
           <Flex>
