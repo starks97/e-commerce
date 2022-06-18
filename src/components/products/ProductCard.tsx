@@ -35,7 +35,7 @@ export default function ProductCard({ product }: Props) {
       onClick={handleClick}
       cursor="pointer"
     >
-      <Link href='/product/slug' passHref prefetch={false}>
+      <Link href="/product/slug" passHref prefetch={false}>
         <Box
           display="flex"
           justifyContent="center"

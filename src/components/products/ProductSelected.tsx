@@ -34,7 +34,7 @@ export default function ProductSelected() {
           <ProductSlideShow images={product.images} />
         </GridItem>
 
-        <GridItem justifyContent="center" alignItems="center">
+        <GridItem >
           <Flex flexDirection="column">
             <Text fontSize="2xl" fontFamily="Less" fontWeight="bold">
               {product.title}
