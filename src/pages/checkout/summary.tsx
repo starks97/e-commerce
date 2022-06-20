@@ -1,6 +1,4 @@
 
-
-
 import {SummaryItems} from '../../components/checkout'
 import { ShopLayout } from '../../components/layouts'
 import { Navbar } from '../../components/navbar'
