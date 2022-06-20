@@ -1,4 +1,3 @@
-import { Flex, Grid, GridItem, Box, Text, Container } from "@chakra-ui/react";
 
 import { CartResume } from "../../components/cart";
 import { ShopLayout } from "../../components/layouts";
