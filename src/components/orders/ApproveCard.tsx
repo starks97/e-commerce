@@ -13,7 +13,7 @@ export default function ApproveCard({}: Props) {
   const [isApproved, setIsApproved] = useState<boolean>(false);
   return (
     <>
-      {isApproved ? (
+      {!isApproved ? (
         <Box
           border="1px"
           borderColor="red"
