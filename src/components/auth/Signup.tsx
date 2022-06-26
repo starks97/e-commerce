@@ -16,6 +16,7 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Container
 } from "@chakra-ui/react";
 
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -29,6 +30,7 @@ export default function SignupCard() {
       align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
+      h='calc(100vh - 60px)'
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
@@ -50,7 +52,7 @@ export default function SignupCard() {
                   <Input type="text" />
                 </FormControl>
               </Box>
-              <Box>
+              <Box >
                 <FormControl id="lastName">
                   <FormLabel>Last Name</FormLabel>
                   <Input type="text" />
