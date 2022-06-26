@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/prisma
 
 # testing
 /coverage
@@ -27,9 +28,12 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.dockerignore*
+next-env*
 
 # vercel
 .vercel
+
 
 # typescript
 *.tsbuildinfo
