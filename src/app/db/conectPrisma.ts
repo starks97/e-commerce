@@ -10,4 +10,11 @@ export default class PrismaDB {
     }
     return PrismaDB.instance;
   }
+
+  public static async disconnect() {
+    if (PrismaDB.instance) {
+      await PrismaDB.instance.$disconnect();
+      //Prisma.instance = null;
+    }
+  }
 }
