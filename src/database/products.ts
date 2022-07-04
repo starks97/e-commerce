@@ -1,3 +1,5 @@
+import { Genders, Types, ValidSizes } from "@prisma/client";
+
 interface SeedProduct {
   description: string;
   images: string[];
@@ -7,12 +9,13 @@ interface SeedProduct {
   slug: string;
   tags: string[];
   title: string;
-  type: ValidTypes;
-  gender: "men" | "women" | "kid" | "unisex";
+  type: Types;
+  gender: Genders;
 }
 
-export type ValidSizes = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
-type ValidTypes = "shirts" | "pants" | "hoodies" | "hats";
+//export type ValidSizes = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
+//type ValidTypes = "shirts" | "pants" | "hoodies" | "hats";
+//type Genders = "men" | "women" | "kid" | "unisex";
 
 export interface SeedData {
   products: SeedProduct[];
