@@ -1,8 +1,7 @@
 import { Product, Prisma, Genders } from "@prisma/client";
 
 import { PrismaDB } from "../../db";
-import { initialData, SeedData } from "../../../database/products";
-import { ValidGenders, shop_genders } from "../../../utils";
+import { initialData } from "../../../database/products";
 
 export async function createDataProducts() {
   const prisma = await PrismaDB.getInstance();
@@ -45,6 +44,36 @@ export default async function getAllProductsByGender(
   }
 }
 
+export async function getAllProductsBySlug(
+  slug: Product["slug"]
+): Promise<Product[] | undefined> {
+  const prisma = await PrismaDB.getInstance();
+
+  try {
+    const products = await prisma.product.findMany({
+      where: { slug },
+      select: {
+        id: true,
+        title: true,
+        price: true,
+        images: true,
+        tags: true,
+        inStock: true,
+        description: true,
+        sizes: true,
+        slug: true,
+        type: true,
+        created_at: true,
+      },
+    });
+    return products as Product[];
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await PrismaDB.disconnect();
+  }
+}
+
 export async function getAllProducts(): Promise<Product[] | undefined> {
   const prisma = await PrismaDB.getInstance();
   try {
@@ -71,11 +100,25 @@ export async function updateProduct(
 ): Promise<Product | undefined> {
   const prisma = await PrismaDB.getInstance();
   try {
+    const oldProduct = await prisma.product.findUnique({
+      where: { id },
+    });
+
+    if (!oldProduct) {
+      return undefined;
+    }
+
     const products = await prisma.product.update({
       where: {
         id,
       },
-      data,
+      data: {
+        title: data.title || oldProduct.title,
+        price: data.price || oldProduct.price,
+        description: data.description || oldProduct.description,
+        inStock: data.inStock || oldProduct.inStock,
+        gender: data.gender || oldProduct.gender,
+      },
     });
     return products;
   } catch (e) {
@@ -114,3 +157,50 @@ export async function deleteProduct(id: string) {
     await PrismaDB.disconnect();
   }
 }
+
+export async function searchProducts<T extends string>(
+  q: T
+): Promise<Product | undefined> {
+  const prisma = await PrismaDB.getInstance();
+  try {
+    const products = await prisma.product.findMany({
+      //es para filtar por el campo que se le pase
+      where: {
+        OR: [
+          {
+            tags: {
+              has: q,
+            },
+          },
+          {
+            slug: {
+              contains: q,
+            },
+          },
+          {
+            title: {
+              contains: q,
+            },
+          },
+        ],
+      },
+      select: {
+        title: true,
+        description: true,
+        price: true,
+        images: true,
+        inStock: true,
+        slug: true,
+        tags: true,
+        created_at: true,
+      },
+    });
+    return products as unknown as Product;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await PrismaDB.disconnect();
+  }
+}
+
+type D = Product["title"] | Product["tags"];
