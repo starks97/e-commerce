@@ -13,7 +13,7 @@ export default methodSwitcher({
     const products = await searchProducts(`${q}`);
 
     if (Array.isArray(q) || q.length === 0) {
-      return res.status(400).json({ message: "bad request" });
+      return res.status(404).json({ message: "bad request" });
     }
     return res.status(200).json(products);
   },

@@ -1,6 +1,6 @@
 import { Flex, Text, Button, Grid } from "@chakra-ui/react";
 
-import { ValidSizes } from "../../database/products";
+import { ValidSizes } from "@Prisma/client"
 
 interface Props {
   selectedSize: ValidSizes;
