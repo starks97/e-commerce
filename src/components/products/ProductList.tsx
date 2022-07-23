@@ -5,14 +5,22 @@ import ProductCard from "./ProductCard";
 
 interface Props {
   products: IProduct[];
+  children: React.ReactNode;
+}
+enum Routes  {
+  Home = "/",
+  Kid = "/category/kid",
+
 }
 
-export default function ProductList({ products }: Props) {
+export type Pages = "All Products" | "Kids Products" | "Men Products" | "Women Products" | "Unisex Products"
+
+export default function ProductList({ products, children }: Props) {
   return (
     <Container maxW="90rem">
       <Box marginTop="5" marginBottom="10">
         <Text fontSize="4xl" fontFamily="Less" fontWeight="semi-bold">
-          All the products
+          {children}
         </Text>
       </Box>
       <Grid

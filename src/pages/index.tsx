@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 
 import { ShopLayout } from "../components/layouts";
 import { Navbar } from "../components/navbar";
-import { initialData } from "../database/products";
 import { ProductList } from "../components/products";
 import { useProducts } from "../hooks";
 import { FullScreenLoading } from "../components/ui";
@@ -19,7 +18,11 @@ const Home: NextPage = () => {
     <ShopLayout title="Teslo | Shop" pageDescription="Welcome our shop">
       <Navbar />
 
-      {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
+      {isLoading ? (
+        <FullScreenLoading />
+      ) : (
+        <ProductList children="All Products" products={products} />
+      )}
     </ShopLayout>
   );
 };

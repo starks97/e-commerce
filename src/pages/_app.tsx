@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig
       value={{
-        //refreshInterval: 3000,
+        //refreshInterval: 1000,
         fetcher: (resource, init) =>
           fetch(resource, init).then((res) => res.json()),
       }}

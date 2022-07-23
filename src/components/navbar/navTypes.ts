@@ -7,12 +7,28 @@ export interface NavItem {
 
 export const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Man",
+    label: "Men",
+    href: "/category/men"
+  },
+  {
+    label: "Women",
+    href: "/category/women"
+  },
+  {
+    label: "Kids",
+    href: "/category/kid",
+  },
+  {
+    label: "Unisex",
+    href: "/category/unisex",
+  },
+  /* {
+    label: "Men",
     children: [
       {
         label: "Explore Design Work",
         subLabel: "Trending Design to inspire you",
-        href: "#",
+        href: "/category/men",
       },
       {
         label: "New & Noteworthy",
@@ -20,24 +36,5 @@ export const NAV_ITEMS: Array<NavItem> = [
         href: "#",
       },
     ],
-  },
-  {
-    label: "Women",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
-  {
-    label: "Kids",
-    href: "#",
-  },
+  }, */
 ];

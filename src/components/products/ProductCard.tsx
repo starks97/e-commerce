@@ -15,6 +15,7 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const [isHover, setIsHover] = useState<boolean>(false);
+  const [isImageLoad, setIsImageLoad] = useState<boolean>(false);
 
   const ImgProduct = useMemo(() => {
     return isHover
@@ -52,12 +53,13 @@ export default function ProductCard({ product }: Props) {
             alt={product.title}
             objectFit="cover"
             className="fadeIn"
+            onLoad= {() => setIsImageLoad(true)}
           />
         </Box>
       </Link>
 
       <Box
-        sx={{ marginTop: "2" }}
+        sx={{ marginTop: "2", display: isImageLoad ? "block" : "none" }}
         className="fadeIn"
         display="flex"
         flexDirection="column"
