@@ -13,11 +13,15 @@ import {
 import { initialData } from "../../database/products";
 import ProductSlideShow from "./ProductSlideShow";
 import { ItemCounter } from "../ui";
-import SizeSelector from './SizeSelector'
+import SizeSelector from "./SizeSelector";
 
-const product = initialData.products[0];
+import { Product } from "@prisma/client";
 
-export default function ProductSelected() {
+interface Props {
+  product: Product;
+}
+
+export default function ProductSelected({ product }: Props) {
   return (
     <Container maxW="80rem" marginTop={8}>
       <Grid
@@ -31,10 +35,10 @@ export default function ProductSelected() {
         gap={5}
       >
         <GridItem minW="20rem">
-          <ProductSlideShow images={product.images} />
+          {<ProductSlideShow images={product.images} />}
         </GridItem>
 
-        <GridItem >
+        <GridItem>
           <Flex flexDirection="column">
             <Text fontSize="2xl" fontFamily="Less" fontWeight="bold">
               {product.title}
@@ -44,7 +48,7 @@ export default function ProductSelected() {
               {`$${product.price}`}
             </Text>
           </Flex>
-          <SizeSelector selectedSize={product.sizes[2]} sizes={product.sizes} />
+          <SizeSelector sizes={product.sizes} selectedSize={"XS"} />
 
           {/*quantity */}
           <Flex sx={{ my: 7 }} alignItems="center" gap={2}>

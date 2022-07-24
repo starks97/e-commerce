@@ -63,7 +63,6 @@ export async function getAllProductsBySlug(
         sizes: true,
         slug: true,
         type: true,
-        created_at: true,
       },
     });
     return products as Product[];

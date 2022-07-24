@@ -1,19 +1,20 @@
 import { Box, Container, Grid, Text } from "@chakra-ui/react";
+import { Product } from "@prisma/client";
 
 import { IProduct } from "../../interfaces";
 import ProductCard from "./ProductCard";
 
 interface Props {
-  products: IProduct[];
+  products: Product[];
   children: React.ReactNode;
 }
-enum Routes  {
-  Home = "/",
-  Kid = "/category/kid",
 
-}
-
-export type Pages = "All Products" | "Kids Products" | "Men Products" | "Women Products" | "Unisex Products"
+export type Pages =
+  | "All Products"
+  | "Kids Products"
+  | "Men Products"
+  | "Women Products"
+  | "Unisex Products";
 
 export default function ProductList({ products, children }: Props) {
   return (
@@ -33,9 +34,9 @@ export default function ProductList({ products, children }: Props) {
         }}
         gridGap={{ base: "1rem", md: "2rem" }}
       >
-      {products.map((item) => (
-        <ProductCard key={item.slug} product={item} />
-      ))}
+        {products.map((item) => (
+          <ProductCard key={item.slug} product={item} />
+        ))}
       </Grid>
     </Container>
   );

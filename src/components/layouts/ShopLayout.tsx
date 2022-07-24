@@ -1,7 +1,10 @@
-import  Head  from "next/head";
+import Head from "next/head";
 import React from "react";
 
-interface Props {
+import { Product } from "@prisma/client";
+
+
+interface Props  {
   title: string;
   pageDescription: string;
   imageFullUrl?: string;

@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Flex, Grid, Text, Container, GridItem, Box } from "@chakra-ui/react";
+import { Text, GridItem, Box } from "@chakra-ui/react";
 
 import { IProduct } from "../../interfaces";
 import { Navbar } from "../navbar";
@@ -36,7 +36,7 @@ export default function ProductCard({ product }: Props) {
       onClick={handleClick}
       cursor="pointer"
     >
-      <Link href="/product/slug" passHref prefetch={false}>
+      <Link href={`/product/${product.slug}`} passHref prefetch={false}>
         <Box
           display="flex"
           justifyContent="center"
@@ -53,7 +53,7 @@ export default function ProductCard({ product }: Props) {
             alt={product.title}
             objectFit="cover"
             className="fadeIn"
-            onLoad= {() => setIsImageLoad(true)}
+            onLoad={() => setIsImageLoad(true)}
           />
         </Box>
       </Link>
