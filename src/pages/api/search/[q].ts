@@ -2,10 +2,7 @@ import { Product } from "@prisma/client";
 
 import { methodSwitcher } from "../../../utils";
 
-import {
-  searchProducts,
-  getAllProducts,
-} from "../../../app/backend/product/Product";
+import { searchProducts } from "../../../app/backend/product/Product";
 
 export default methodSwitcher({
   GET: async (req, res) => {

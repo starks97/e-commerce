@@ -55,7 +55,7 @@ export default function addressPage({}: Props) {
               <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"
-                  children={<PhoneIcon color="gray.300" />}
+                  /*children={<PhoneIcon color="gray.300" />}*/
                 />
                 <Input type="tel" placeholder="Phone number" />
               </InputGroup>

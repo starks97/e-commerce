@@ -191,7 +191,6 @@ export async function searchProducts<T extends string>(
         inStock: true,
         slug: true,
         tags: true,
-        created_at: true,
       },
     });
     return products as unknown as Product;

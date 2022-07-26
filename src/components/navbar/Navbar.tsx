@@ -23,11 +23,12 @@ import {
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-  SearchIcon,
 } from "@chakra-ui/icons";
 
 import { NavItem, NAV_ITEMS } from "./navTypes";
 import ShopCart from "../../assets/ShopCart.svg";
+
+import { SearchInput } from "../searchInput";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -90,14 +91,7 @@ export default function WithSubnavigation() {
           spacing={6}
           alignItems="center"
         >
-          <NextLink href="/checkout" passHref>
-            <IconButton
-              icon={<SearchIcon />}
-              fontSize={"xl"}
-              aria-label="Search"
-              variant={"none"}
-            />
-          </NextLink>
+          <SearchInput />
           <NextLink href="/cart" passHref>
             <Button size="sm" variant="none">
               <Image src={ShopCart} layout="fill" />

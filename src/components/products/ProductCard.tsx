@@ -6,8 +6,6 @@ import Link from "next/link";
 import { Text, GridItem, Box } from "@chakra-ui/react";
 
 import { IProduct } from "../../interfaces";
-import { Navbar } from "../navbar";
-import { ShopLayout } from "../layouts";
 
 interface Props {
   product: IProduct;
@@ -25,7 +23,6 @@ export default function ProductCard({ product }: Props) {
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("clicked");
   };
 
   return (

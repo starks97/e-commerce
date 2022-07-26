@@ -1,6 +1,11 @@
 import React from "react";
 
-import { GetServerSideProps, NextPage } from "next";
+import {
+  GetServerSideProps,
+  NextPage,
+  GetStaticPaths,
+  GetStaticProps,
+} from "next";
 
 import { Product } from "@prisma/client";
 
@@ -8,7 +13,10 @@ import { ShopLayout } from "../../components/layouts";
 import { Navbar } from "../../components/navbar";
 import { ProductSelected } from "../../components/products";
 
-import { getAllProductsBySlug } from "../../app/backend/product/Product";
+import {
+  getAllProducts,
+  getAllProductsBySlug,
+} from "../../app/backend/product/Product";
 
 interface Props {
   product: Product;
@@ -23,13 +31,24 @@ const ProductPage: NextPage<Props> = ({ product }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { slug } = params as { slug: string };
-  const products: Product[] = (await getAllProductsBySlug(
+// You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
+
+export const getStaticPaths: GetStaticPaths = async (ctx) => {
+  const products: Product[] = (await getAllProducts()) as unknown as Product[];
+  //const getSlugs = products.map((product) => product.slug);
+  return {
+    paths: products.map(({ slug }) => ({ params: { slug } })),
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { slug = "" } = params as { slug: string };
+
+  const getProducts: Product[] = (await getAllProductsBySlug(
     slug
   )) as unknown as Product[];
-
-  if (!products) {
+  if (!getProducts) {
     return {
       redirect: {
         destination: "/",
@@ -39,8 +58,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
   return {
     props: {
-      product: products[0],
+      product: getProducts[0],
     },
   };
 };
+
 export default ProductPage;

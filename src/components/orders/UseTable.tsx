@@ -1,7 +1,14 @@
 import { useMemo } from "react";
 
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from "@chakra-ui/react";
-
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from "@chakra-ui/react";
 
 import { UseTableInstanceProps } from "react-table";
 import React from "react";
@@ -16,6 +23,13 @@ export interface TableNewProps<T extends object>
     | "rows"
   > {}
 
+export function generateId(): string {
+  const random: IDGenerator = Math.random().toString(32).substring(2);
+  const date: IDGenerator = Date.now().toString(32);
+  return random + date;
+}
+
+type IDGenerator = string | number;
 export default function UseTable<T extends object>(
   props: UseTableInstanceProps<T>
 ) {
@@ -27,7 +41,7 @@ export default function UseTable<T extends object>(
       <Table {...getTableProps()} border="1px" borderColor="blue.500">
         <Thead>
           {headerGroups.map((headerGroup) => (
-            <Tr {...headerGroup.getHeaderGroupProps()}>
+            <Tr {...headerGroup.getHeaderGroupProps()} key={generateId()}>
               {headerGroup.headers.map((column) => (
                 <Th
                   {...column.getHeaderProps()}
@@ -36,6 +50,7 @@ export default function UseTable<T extends object>(
                   bg="aliceblue"
                   color="black"
                   fontWeight="bold"
+                  key={generateId()}
                 >
                   {column.render("Header")}
                 </Th>
@@ -47,7 +62,7 @@ export default function UseTable<T extends object>(
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <Tr {...row.getRowProps()}>
+              <Tr {...row.getRowProps()} key={generateId()}>
                 {row.cells.map((cell) => {
                   return (
                     <Td
@@ -56,6 +71,7 @@ export default function UseTable<T extends object>(
                       border="1px "
                       borderColor="gray.500"
                       bg="papayawhip"
+                      key={generateId()}
                     >
                       {cell.render("Cell")}
                     </Td>

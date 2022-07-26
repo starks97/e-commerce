@@ -1,30 +1,49 @@
-import type { NextPage } from "next";
+import type { NextPage, GetServerSideProps } from "next";
 
 import { ShopLayout } from "../components/layouts";
 import { Navbar } from "../components/navbar";
 import { ProductList } from "../components/products";
-import { useProducts } from "../hooks";
-import { FullScreenLoading } from "../components/ui";
+import { searchProducts } from "../app/backend/product";
+import { Product } from "@prisma/client";
 
-const Home: NextPage = () => {
-  const { products, isLoading } = useProducts("/products");
+interface Props {
+  products: Product[];
+  q: string;
+}
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("clicked");
-  };
+const Home: NextPage<Props> = ({ products, q }) => {
+  //const { products, isLoading } = useProducts("/products");
 
   return (
-    <ShopLayout title="Teslo | Shop" pageDescription="Welcome our shop">
+    <ShopLayout title={`Teslo | Shop  `} pageDescription="Welcome our shop">
       <Navbar />
 
-      {isLoading ? (
-        <FullScreenLoading />
-      ) : (
-        <ProductList children="All Products" products={products} />
-      )}
+      <ProductList title={`${q} products`} products={products} />
     </ShopLayout>
   );
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { q = "" } = query as { q: string };
+  const products: Product[] = (await searchProducts(
+    `${q}`
+  )) as unknown as Product[];
+
+  if (q.length === 0) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      products,
+      q
+    },
+  };
+};
