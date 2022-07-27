@@ -45,9 +45,7 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug = "" } = params as { slug: string };
 
-  const getProducts: Product[] = (await getAllProductsBySlug(
-    slug
-  )) as unknown as Product[];
+  const getProducts = await getAllProductsBySlug(slug);
   if (!getProducts) {
     return {
       redirect: {
