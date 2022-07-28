@@ -9,7 +9,7 @@ import {
   useDisclosure,
   ModalBody,
 } from "@chakra-ui/react";
-import React, { useState, useRef, SetStateAction } from "react";
+import React, { useState, SetStateAction } from "react";
 
 import { useRouter } from "next/router";
 
