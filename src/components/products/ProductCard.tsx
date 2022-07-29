@@ -3,11 +3,9 @@ import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Flex, Grid, Text, Container, GridItem, Box } from "@chakra-ui/react";
+import { Text, GridItem, Box } from "@chakra-ui/react";
 
 import { IProduct } from "../../interfaces";
-import { Navbar } from "../navbar";
-import { ShopLayout } from "../layouts";
 
 interface Props {
   product: IProduct;
@@ -15,6 +13,7 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   const [isHover, setIsHover] = useState<boolean>(false);
+  const [isImageLoad, setIsImageLoad] = useState<boolean>(false);
 
   const ImgProduct = useMemo(() => {
     return isHover
@@ -24,7 +23,6 @@ export default function ProductCard({ product }: Props) {
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("clicked");
   };
 
   return (
@@ -35,7 +33,7 @@ export default function ProductCard({ product }: Props) {
       onClick={handleClick}
       cursor="pointer"
     >
-      <Link href='/product/slug' passHref prefetch={false}>
+      <Link href={`/product/${product.slug}`} passHref prefetch={false}>
         <Box
           display="flex"
           justifyContent="center"
@@ -52,12 +50,13 @@ export default function ProductCard({ product }: Props) {
             alt={product.title}
             objectFit="cover"
             className="fadeIn"
+            onLoad={() => setIsImageLoad(true)}
           />
         </Box>
       </Link>
 
       <Box
-        sx={{ marginTop: "2" }}
+        sx={{ marginTop: "2", display: isImageLoad ? "block" : "none" }}
         className="fadeIn"
         display="flex"
         flexDirection="column"

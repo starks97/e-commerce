@@ -7,37 +7,61 @@ export interface NavItem {
 
 export const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Man",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
+    label: "Men",
+    href: "/category/men",
   },
   {
     label: "Women",
+    href: "/category/women",
+  },
+  {
+    label: "Kids",
+    href: "/category/kid",
+  },
+  {
+    label: "Unisex",
+    href: "/category/unisex",
+  },
+  {
+    label: "Open",
     children: [
       {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
+        label: "Profile",
+        subLabel: "Explore your Profile",
+        href: "#profile",
       },
       {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
+        label: "My orders",
+        subLabel: "Watch your orders",
+        href: "#orders",
+      },
+      {
+        label: "Sigin",
+        subLabel: "Sigin in your account",
+        href: "#sigin",
+      },
+      {
+        label: "Logout",
+        subLabel: "Logout from your account",
+        href: "#logout",
       },
     ],
   },
   {
-    label: "Kids",
-    href: "#",
+    label: "Admin",
+    children: [
+      {
+        label: "Admin Panel",
+        href: "#cpanel",
+      },
+      {
+        label: "Orders",
+        href: "#cpanelorders",
+      },
+      {
+        label: "Users",
+        href: "#users",
+      },
+    ],
   },
 ];

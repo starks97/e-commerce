@@ -2,9 +2,9 @@ import React from "react";
 
 import { Slide } from "react-slideshow-image";
 
-import styles from './ProductSlideShow.module.css';
-import 'react-slideshow-image/dist/styles.css'
-
+import styles from "./ProductSlideShow.module.css";
+import "react-slideshow-image/dist/styles.css";
+import { Product } from "@prisma/client";
 
 interface Props {
   images: string[];
@@ -16,7 +16,7 @@ export default function ProductSlideShow({ images }: Props) {
       {images.map((image) => {
         const url = `/products/${image}`;
         return (
-          <div className={styles['each-slide']} key={image}>
+          <div className={styles["each-slide"]} key={image}>
             <div
               style={{
                 backgroundImage: `url(${url})`,

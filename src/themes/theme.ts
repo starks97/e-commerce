@@ -88,6 +88,21 @@ export const theme = extendTheme({
         },
       },
     },
+    Box: {
+      variants: {
+        paidBtn : (theme: StyleFunctionProps) => ({
+          color: 'green',
+          border: '1px solid green',
+          borderColor: 'green',
+          '&:hover': {
+            backgroundColor: 'green',
+            color: 'white',
+          }
+        }),
+
+      }
+
+    },
     Button: {
       /*defaultProps: {
         colorScheme: 'primary',
@@ -164,6 +179,16 @@ export const theme = extendTheme({
               transition: "all 0.3s ease-in-out",
             },
           },
+        }),
+        paidBtn : (theme: StyleFunctionProps) => ({
+          color: 'green',
+          border: '1px solid green',
+          borderColor: 'green',
+          
+          '&:hover': {
+            backgroundColor: 'green',
+            color: 'white',
+          }
         }),
         AnimatedEffect: (theme: StyleFunctionProps) => ({
           "&:before": {
