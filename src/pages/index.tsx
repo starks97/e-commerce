@@ -1,7 +1,5 @@
 import type { NextPage, GetServerSideProps } from "next";
 
-import { Flex, Text, Box } from "@chakra-ui/react";
-
 import { ShopLayout } from "../components/layouts";
 import { Navbar } from "../components/navbar";
 import { ProductCheck, ProductList } from "../components/products";
@@ -13,19 +11,6 @@ interface Props {
   q: string;
 }
 
-class Capitalized {
-  static of(arg: string) {
-    return new Capitalized(arg);
-  }
-
-  constructor(private arg: string) {
-    this.arg = arg.charAt(0).toUpperCase() + arg.slice(1);
-  }
-  toString() {
-    return this.arg;
-  }
-}
-
 const Home: NextPage<Props> = ({ products, q }) => {
   //const { products, isLoading } = useProducts("/products");
 
@@ -34,12 +19,9 @@ const Home: NextPage<Props> = ({ products, q }) => {
       <Navbar />
 
       {products.length !== 0 ? (
-        <ProductList
-          title={`${new Capitalized(q)} Products`}
-          products={products}
-        />
+        <ProductList title={`${q} Products`} products={products} />
       ) : (
-        <ProductCheck q={`${new Capitalized(q)}`} />
+        <ProductCheck q={`${q}`} />
       )}
     </ShopLayout>
   );

@@ -24,6 +24,7 @@ export default function ProductCheck({ q }: Props) {
           fontSize="3xl"
           fontFamily="Less"
           fontWeight="bold"
+          textTransform="capitalize"
         >{`'${q}'`}</Text>
       </Flex>
       <Flex justifyContent={"center"} alignContent={"center"}>

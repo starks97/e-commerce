@@ -12,7 +12,12 @@ export default function ProductList({ products, title }: Props) {
   return (
     <Container maxW="90rem">
       <Box marginTop="5" marginBottom="10">
-        <Text fontSize="4xl" fontFamily="Less" fontWeight="semi-bold">
+        <Text
+          fontSize="4xl"
+          fontFamily="Less"
+          fontWeight="semi-bold"
+          textTransform="capitalize"
+        >
           {title}
         </Text>
       </Box>
