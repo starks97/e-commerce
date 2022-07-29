@@ -40,12 +40,14 @@ type Props = {};
 export default function DataGrid({}: Props) {
   return (
     <Container maxW="80rem" marginTop="10">
-      <Flex sx={{marginBottom: '3rem'}}>
-        <Text as='h1' fontSize='3xl' fontFamily='less' fontWeight='bold'>Order History</Text>
+      <Flex sx={{ marginBottom: "3rem" }}>
+        <Text as="h1" fontSize="3xl" fontFamily="less" fontWeight="bold">
+          Order History
+        </Text>
       </Flex>
       <TableContainer>
         <Table variant="simple">
-          <TableCaption>History of yours orders</TableCaption>
+          <TableCaption>Order from 2/02/2022</TableCaption>
           <Thead>
             <Tr>
               <Th>ID</Th>
