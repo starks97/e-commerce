@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Text, GridItem, Box } from "@chakra-ui/react";
+import { Text, GridItem, Box, Tag } from "@chakra-ui/react";
 
 import { IProduct } from "../../interfaces";
 
@@ -43,6 +43,16 @@ export default function ProductCard({ product }: Props) {
           shadow="lg"
           maxW="fit-content"
         >
+          {product.inStock === 0 && (
+            <Tag
+              bg="black"
+              color="white"
+              sx={{ position: "absolute", zIndex: 99, marginRight: "10rem" }}
+            >
+              Not available
+            </Tag>
+          )}
+
           <Image
             src={ImgProduct}
             width="300"

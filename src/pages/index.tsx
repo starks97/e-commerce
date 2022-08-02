@@ -1,10 +1,11 @@
 import type { NextPage, GetServerSideProps } from "next";
 
+import { Product } from "@prisma/client";
+
 import { ShopLayout } from "../components/layouts";
 import { Navbar } from "../components/navbar";
 import { ProductCheck, ProductList } from "../components/products";
 import { searchProducts, getAllProducts } from "../app/backend/product";
-import { Product } from "@prisma/client";
 
 interface Props {
   products: Product[];

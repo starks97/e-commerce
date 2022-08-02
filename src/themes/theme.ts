@@ -90,18 +90,16 @@ export const theme = extendTheme({
     },
     Box: {
       variants: {
-        paidBtn : (theme: StyleFunctionProps) => ({
-          color: 'green',
-          border: '1px solid green',
-          borderColor: 'green',
-          '&:hover': {
-            backgroundColor: 'green',
-            color: 'white',
-          }
+        paidBtn: (theme: StyleFunctionProps) => ({
+          color: "green",
+          border: "1px solid green",
+          borderColor: "green",
+          "&:hover": {
+            backgroundColor: "green",
+            color: "white",
+          },
         }),
-
-      }
-
+      },
     },
     Button: {
       /*defaultProps: {
@@ -180,15 +178,15 @@ export const theme = extendTheme({
             },
           },
         }),
-        paidBtn : (theme: StyleFunctionProps) => ({
-          color: 'green',
-          border: '1px solid green',
-          borderColor: 'green',
-          
-          '&:hover': {
-            backgroundColor: 'green',
-            color: 'white',
-          }
+        paidBtn: (theme: StyleFunctionProps) => ({
+          color: "green",
+          border: "1px solid green",
+          borderColor: "green",
+
+          "&:hover": {
+            backgroundColor: "green",
+            color: "white",
+          },
         }),
         AnimatedEffect: (theme: StyleFunctionProps) => ({
           "&:before": {
@@ -249,6 +247,30 @@ export const theme = extendTheme({
             borderTop: "none",
             transition: "height 0.3s linear, width 0.3s linear 0.3s",
           },
+        }),
+        selectBtn: (theme: StyleFunctionProps) => ({
+          borderBottomStyle: "solid",
+          bg: "gray.500",
+          my: "5",
+          size: "md",
+          fontFamily: "Less",
+          fontWeight: "light",
+          fontSize: "xl",
+          colorScheme: "facebook",
+          color: "white",
+        }),
+        dontAllowBtn: (theme: StyleFunctionProps) => ({
+          borderRadius: "10px",
+          border: "1px solid red",
+          bg: "white",
+          my: "5",
+          size: "md",
+          fontFamily: "Less",
+          fontWeight: "light",
+          fontSize: "xl",
+          colorScheme: "red",
+          color: "red",
+          cursor: "not-allowed",
         }),
       },
     },

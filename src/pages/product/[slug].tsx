@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   GetServerSideProps,
@@ -31,8 +31,6 @@ const ProductPage: NextPage<Props> = ({ product }: Props) => {
   );
 };
 
-// You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
-
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   const products: Product[] = (await getAllProducts()) as unknown as Product[];
   //const getSlugs = products.map((product) => product.slug);
@@ -45,7 +43,9 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug = "" } = params as { slug: string };
 
-  const getProducts = await getAllProductsBySlug(slug);
+  const getProducts: Product[] = (await getAllProductsBySlug(
+    slug
+  )) as Product[];
   if (!getProducts) {
     return {
       redirect: {

@@ -4,24 +4,32 @@ import {
   Flex,
   Grid,
   Container,
-  Box,
   Text,
   GridItem,
   Button,
+  Tag,
 } from "@chakra-ui/react";
 
-import { initialData } from "../../database/products";
 import ProductSlideShow from "./ProductSlideShow";
 import { ItemCounter } from "../ui";
 import SizeSelector from "./SizeSelector";
 
-import { Product } from "@prisma/client";
+import { Product, ValidSizes } from "@prisma/client";
+import { ICart } from "../../interfaces";
+import { useState } from "react";
 
 interface Props {
   product: Product;
 }
 
 export default function ProductSelected({ product }: Props) {
+  const [tempCartProduct, setTempCartProduct] = useState<ICart>(
+    GetProduct.format(product)
+  );
+
+  const chooseSize = (sizes: ValidSizes) => {
+    setTempCartProduct((currentProduct) => ({ ...currentProduct, sizes }));
+  };
   return (
     <Container maxW="80rem" marginTop={8}>
       <Grid
@@ -44,11 +52,15 @@ export default function ProductSelected({ product }: Props) {
               {product.title}
             </Text>
             <br />
-            <Text as="sub" fontSize="lg">
+            <Text as="sub" fontSize="lg" marginTop="1rem">
               {`$${product.price}`}
             </Text>
           </Flex>
-          <SizeSelector sizes={product.sizes} selectedSize={"XS"} />
+          <SizeSelector
+            sizes={product.sizes}
+            selectedSize={tempCartProduct.sizes}
+            onSelectSize={chooseSize}
+          />
 
           {/*quantity */}
           <Flex sx={{ my: 7 }} alignItems="center" gap={2}>
@@ -59,22 +71,15 @@ export default function ProductSelected({ product }: Props) {
           </Flex>
 
           <Flex>
-            <Link href="/cart" passHref>
-              <Button
-                variant={"solid"}
-                bg="gray.500"
-                my={5}
-                size="md"
-                fontFamily="Less"
-                fontWeight="light"
-                fontSize="xl"
-                colorScheme="facebook"
-                color="white"
-                minW={{ sm: "100%", xl: "80%" }}
-              >
-                Add to cart
+            {product.inStock > 0 ? (
+              <Button variant={"selectBtn"} minW={{ sm: "100%", xl: "80%" }}>
+                {tempCartProduct.sizes ? "Add to Cart" : "Select Size"}
               </Button>
-            </Link>
+            ) : (
+              <Button variant={"dontAllowBtn"} minW={{ sm: "100%", xl: "80%" }}>
+                Not available
+              </Button>
+            )}
           </Flex>
 
           <Flex flexDirection="column">
@@ -94,4 +99,19 @@ export default function ProductSelected({ product }: Props) {
       </Grid>
     </Container>
   );
+}
+
+class GetProduct {
+  static format(product: Product): ICart {
+    return {
+      _id: product.id,
+      images: product.images[0],
+      price: product.price,
+      slug: product.slug,
+      title: product.title,
+      gender: product.gender,
+      quantity: 1,
+      sizes: null,
+    };
+  }
 }
