@@ -8,14 +8,17 @@ import {
   Divider,
   Button,
 } from "@chakra-ui/react";
+import { Product } from "@prisma/client";
 import { IProduct } from "../../interfaces";
 
 import CartList from "./CartList";
 import OrderSummary from "./OrderSummary";
 
-interface Props {}
+interface Props {
+  product: Product;
+}
 
-export default function CartResume({}: Props) {
+export default function CartResume({ product }: Props) {
   return (
     <Container maxW="80rem" marginTop={8}>
       <Flex>
@@ -34,7 +37,7 @@ export default function CartResume({}: Props) {
         }}
         gap={5}
       >
-        <CartList editable />
+        <CartList editable product={product} />
         <GridItem>
           <Flex
             border="black"

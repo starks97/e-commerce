@@ -12,11 +12,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { initialData } from "../../database/products";
-import { IProduct } from "../../interfaces";
 import { ItemCounter } from "../ui";
+import { Product } from "@prisma/client";
 
 interface Props {
   editable?: boolean;
+  product: Product;
 }
 
 const ProductsInCart = [
@@ -24,7 +25,8 @@ const ProductsInCart = [
   initialData.products[1],
   initialData.products[2],
 ];
-export default function CartList({ editable = false }: Props) {
+export default function CartList({ editable = false, product }: Props) {
+  console.log(ProductsInCart);
   return (
     <GridItem gap={5} marginTop={5}>
       {ProductsInCart.map((items) => (
@@ -35,7 +37,7 @@ export default function CartList({ editable = false }: Props) {
           marginBottom={5}
           sx={{ flexDirection: { base: "column", sm: "row" } }}
         >
-          <Link href="/product/slug" passHref>
+          <Link href={`/product/${items.slug}`} passHref>
             <Box
               borderWidth="1px"
               rounded="lg"
@@ -58,7 +60,19 @@ export default function CartList({ editable = false }: Props) {
             </Text>
             <Text fontSize="sm" sx={{ my: 2 }}>{`$${items.price}`}</Text>
             <Text sx={{ my: 2 }}>Size: M</Text>
-            <Flex sx={{ my: 2 }}>{editable ? <ItemCounter /> : "nones"}</Flex>
+            <Flex sx={{ my: 2 }}>
+              {editable ? (
+                <ItemCounter
+                  currentValue={1}
+                  maxValue={5}
+                  updateQuantity={function (newValue: number): void {
+                    throw new Error("Function not implemented.");
+                  }}
+                />
+              ) : (
+                "nones"
+              )}
+            </Flex>
             <Flex maxW="80%">
               {editable && (
                 <Button color="red.400" variant="ghost">

@@ -1,4 +1,6 @@
-import Link from "next/link";
+import { useContext, useState } from "react";
+
+import { useRouter } from "next/router";
 
 import {
   Flex,
@@ -8,6 +10,9 @@ import {
   GridItem,
   Button,
   Tag,
+  Alert,
+  AlertIcon,
+  Stack,
 } from "@chakra-ui/react";
 
 import ProductSlideShow from "./ProductSlideShow";
@@ -16,20 +21,49 @@ import SizeSelector from "./SizeSelector";
 
 import { Product, ValidSizes } from "@prisma/client";
 import { ICart } from "../../interfaces";
-import { useState } from "react";
+
+import { CartContext } from "../../context";
 
 interface Props {
   product: Product;
 }
 
 export default function ProductSelected({ product }: Props) {
+  //useContext
+  const { addProductToCart } = useContext(CartContext);
+
   const [tempCartProduct, setTempCartProduct] = useState<ICart>(
     GetProduct.format(product)
   );
 
+  const router = useRouter();
+
   const chooseSize = (sizes: ValidSizes) => {
     setTempCartProduct((currentProduct) => ({ ...currentProduct, sizes }));
   };
+
+  const onUpdateQuantity = (quantity: number) => {
+    setTempCartProduct((currentProduct) => ({ ...currentProduct, quantity }));
+  };
+
+  const onAddToCart = () => {
+    if (!tempCartProduct.sizes) {
+      console.log(tempCartProduct);
+      return (
+        <Stack spacing={3}>
+          <Alert status="warning">
+            <AlertIcon />
+            Please select your size
+          </Alert>
+        </Stack>
+      );
+    }
+    //TODO: llamar la accion del context para agregar al carrito
+
+    router.push("/cart");
+    addProductToCart(tempCartProduct);
+  };
+
   return (
     <Container maxW="80rem" marginTop={8}>
       <Grid
@@ -67,12 +101,21 @@ export default function ProductSelected({ product }: Props) {
             <Text fontSize="xl" fontFamily="Less" fontWeight="light">
               Quantity
             </Text>
-            <ItemCounter />
+
+            <ItemCounter
+              currentValue={tempCartProduct.quantity}
+              maxValue={product.inStock > 10 ? 10 : product.inStock}
+              updateQuantity={onUpdateQuantity}
+            />
           </Flex>
 
           <Flex>
             {product.inStock > 0 ? (
-              <Button variant={"selectBtn"} minW={{ sm: "100%", xl: "80%" }}>
+              <Button
+                variant={"selectBtn"}
+                minW={{ sm: "100%", xl: "80%" }}
+                onClick={onAddToCart}
+              >
                 {tempCartProduct.sizes ? "Add to Cart" : "Select Size"}
               </Button>
             ) : (

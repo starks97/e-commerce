@@ -57,12 +57,11 @@ export async function getAllProductsBySlug(
         title: true,
         price: true,
         images: true,
-        tags: true,
-        inStock: true,
         description: true,
         sizes: true,
         slug: true,
-        type: true,
+        gender: true,
+        inStock: true,
       },
     });
     return products as Product[];

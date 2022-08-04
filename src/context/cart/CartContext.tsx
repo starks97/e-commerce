@@ -3,7 +3,8 @@ import { createContext } from "react";
 import { ICart } from "../../interfaces";
 
 interface ContextProps {
-  cart: ICart;
+  cart: ICart[];
+  addProductToCart: (product: ICart) => void;
 }
 
-export const CartContext = createContext({});
+export const CartContext = createContext({} as ContextProps);

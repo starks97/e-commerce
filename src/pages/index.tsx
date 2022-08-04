@@ -14,7 +14,6 @@ interface Props {
 
 const Home: NextPage<Props> = ({ products, q }) => {
   //const { products, isLoading } = useProducts("/products");
-
   return (
     <ShopLayout title={`Teslo | Shop `} pageDescription="Welcome our shop">
       <Navbar />
