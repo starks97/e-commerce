@@ -1,15 +1,20 @@
+import React, { Component, FC, useEffect, useReducer } from "react";
+
+import Cookie from "js-cookie";
+
 import { Product } from "@prisma/client";
-import React, { Component, useReducer, FC, ReactNode } from "react";
 
 import { ICart } from "../../interfaces";
 import { CartContext, cartReducer } from "./";
+
+type R = string | null | undefined;
 
 export interface CartState {
   cart: ICart[];
 }
 
 const CART_INITIAL_STATE: CartState = {
-  cart: [],
+  cart: Cookie.get("cart") ? JSON.parse(Cookie.get("cart") || "") : [],
 };
 
 export const CartProvider: FC<{ children: React.ReactNode }> = ({
@@ -17,16 +22,25 @@ export const CartProvider: FC<{ children: React.ReactNode }> = ({
 }) => {
   const [cartState, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
 
-  const addProductToCart = (product: ICart) => {
-    //dispatch({ type: "[Cart] - Add Product", payload: product });
-    /*const productsInCart = cartState.cart.filter(
-      (p) => p._id !== product._id && p.sizes !== product.sizes
-    );
-    dispatch({
-      type: "[Cart] - Add Product",
-      payload: [...productsInCart, product],
-    });*/
+  useEffect(() => {
+    Cookie.set("cart", JSON.stringify(cartState.cart));
+  }, [cartState.cart]);
 
+  useEffect(() => {
+    try {
+      dispatch({
+        type: "[Cart] - LoadCart from cookies | storage",
+        payload: cartState.cart,
+      });
+    } catch (error) {
+      dispatch({
+        type: "[Cart] - LoadCart from cookies | storage",
+        payload: [],
+      });
+    }
+  }, []);
+
+  const addProductToCart = (product: ICart) => {
     const productInCart = cartState.cart.some(
       (item) => item._id === product._id
     );
@@ -36,11 +50,11 @@ export const CartProvider: FC<{ children: React.ReactNode }> = ({
         payload: [...cartState.cart, product],
       });
 
-    const PIC_differentSize = cartState.cart.some(
+    const cartItem_differentSize = cartState.cart.some(
       (item) => item._id === product._id && item.sizes === product.sizes
     );
 
-    if (!PIC_differentSize)
+    if (!cartItem_differentSize)
       return dispatch({
         type: "[Cart] - Update Products in Cart",
         payload: [...cartState.cart, product],

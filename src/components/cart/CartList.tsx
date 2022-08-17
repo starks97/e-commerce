@@ -26,7 +26,6 @@ const ProductsInCart = [
   initialData.products[2],
 ];
 export default function CartList({ editable = false, product }: Props) {
-  console.log(ProductsInCart);
   return (
     <GridItem gap={5} marginTop={5}>
       {ProductsInCart.map((items) => (

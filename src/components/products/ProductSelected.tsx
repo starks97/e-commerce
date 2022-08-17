@@ -48,7 +48,6 @@ export default function ProductSelected({ product }: Props) {
 
   const onAddToCart = () => {
     if (!tempCartProduct.sizes) {
-      console.log(tempCartProduct);
       return (
         <Stack spacing={3}>
           <Alert status="warning">
@@ -58,7 +57,6 @@ export default function ProductSelected({ product }: Props) {
         </Stack>
       );
     }
-    //TODO: llamar la accion del context para agregar al carrito
 
     router.push("/cart");
     addProductToCart(tempCartProduct);
