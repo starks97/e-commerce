@@ -14,21 +14,20 @@ import Image from "next/image";
 import { initialData } from "../../database/products";
 import { ItemCounter } from "../ui";
 import { Product } from "@prisma/client";
+import { CartContext } from "../../context";
+import { useContext } from "react";
 
 interface Props {
   editable?: boolean;
   product: Product;
 }
 
-const ProductsInCart = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-];
-export default function CartList({ editable = false, product }: Props) {
+export default function CartList({ editable = false }: Props) {
+  const { cart } = useContext(CartContext);
+
   return (
     <GridItem gap={5} marginTop={5}>
-      {ProductsInCart.map((items) => (
+      {cart.map((items) => (
         <Flex
           key={items.slug}
           alignContent="center"
@@ -45,7 +44,7 @@ export default function CartList({ editable = false, product }: Props) {
               cursor="pointer"
             >
               <Image
-                src={`/products/${items.images[0]}`}
+                src={`/products/${items.images}`}
                 width="170"
                 height="200"
                 alt="product checkOut"
@@ -62,8 +61,8 @@ export default function CartList({ editable = false, product }: Props) {
             <Flex sx={{ my: 2 }}>
               {editable ? (
                 <ItemCounter
-                  currentValue={1}
-                  maxValue={5}
+                  currentValue={items.quantity}
+                  maxValue={10}
                   updateQuantity={function (newValue: number): void {
                     throw new Error("Function not implemented.");
                   }}

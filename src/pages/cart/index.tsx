@@ -9,9 +9,11 @@ interface Props {
 
 export default function CartPage({ product }: Props) {
   return (
-    <ShopLayout title="cart" pageDescription="your items">
-      <Navbar />
-      <CartResume product={product} />
-    </ShopLayout>
+    <>
+      <ShopLayout title="cart" pageDescription="your items">
+        <Navbar />
+        <CartResume product={product} />
+      </ShopLayout>
+    </>
   );
 }
