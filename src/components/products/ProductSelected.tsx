@@ -150,7 +150,7 @@ class GetProduct {
       price: product.price,
       slug: product.slug,
       title: product.title,
-      gender: product.gender,
+      //gender: product.gender,
       quantity: 1,
       sizes: null,
     };

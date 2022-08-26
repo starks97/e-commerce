@@ -72,7 +72,7 @@ export async function getAllProductsBySlug(
   }
 }
 
-export async function getAllProducts(): Promise<Product[] | undefined> {
+export async function getAllProducts(): Promise<Product[] | null> {
   const prisma = await PrismaDB.getInstance();
   try {
     const products = await prisma.product.findMany({
@@ -87,9 +87,11 @@ export async function getAllProducts(): Promise<Product[] | undefined> {
     return products as Product[];
   } catch (e) {
     console.error(e);
+    return null
   } finally {
     await PrismaDB.disconnect();
   }
+  return null
 }
 
 export async function updateProduct(

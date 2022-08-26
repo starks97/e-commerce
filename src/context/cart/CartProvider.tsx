@@ -2,19 +2,22 @@ import React, { Component, FC, useEffect, useReducer } from "react";
 
 import Cookie from "js-cookie";
 
-import { Product } from "@prisma/client";
-
-import { ICart } from "../../interfaces";
+import { ICart, ISummary } from "../../interfaces";
 import { CartContext, cartReducer } from "./";
-
-type R = string | null | undefined;
 
 export interface CartState {
   cart: ICart[];
+  summary: ISummary;
 }
 
 const CART_INITIAL_STATE: CartState = {
   cart: Cookie.get("cart") ? JSON.parse(Cookie.get("cart") || "") : [],
+  summary: {
+    total_of_items: 0,
+    total_of_price: 0,
+    taxes: 0,
+    total_of_price_with_taxes: 0,
+  },
 };
 
 export const CartProvider: FC<{ children: React.ReactNode }> = ({
@@ -24,6 +27,32 @@ export const CartProvider: FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     Cookie.set("cart", JSON.stringify(cartState.cart));
+  }, [cartState.cart]);
+
+  useEffect(() => {
+    const total_of_items = cartState.cart.reduce(
+      (acc, curr) => acc + curr.quantity,
+      0
+    );
+
+    const total_of_price = cartState.cart.reduce(
+      (acc, curr) => acc + curr.price * curr.quantity,
+      0
+    );
+
+    const taxes = (total_of_price * 8.467) / 100;
+
+    const orderSummary = {
+      total_of_items,
+      total_of_price,
+      taxes,
+      total_of_price_with_taxes: total_of_price + taxes,
+    };
+
+    dispatch({
+      type: "[Cart] - Update Product Summary",
+      payload: orderSummary,
+    });
   }, [cartState.cart]);
 
   useEffect(() => {
@@ -74,8 +103,26 @@ export const CartProvider: FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const updateQuantityProduct = (product: ICart) => {
+    dispatch({ type: "[Cart] - Update Product Quantity", payload: product });
+  };
+
+  const deleteProduct = (product: ICart) => {
+    dispatch({
+      type: "[Cart] - Delete Product from Cart",
+      payload: product,
+    });
+  };
+
   return (
-    <CartContext.Provider value={{ ...cartState, addProductToCart }}>
+    <CartContext.Provider
+      value={{
+        ...cartState,
+        addProductToCart,
+        updateQuantityProduct,
+        deleteProduct,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

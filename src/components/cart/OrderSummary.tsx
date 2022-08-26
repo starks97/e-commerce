@@ -1,8 +1,14 @@
+import { useContext } from "react";
+
 import { Flex, Grid, Box, Container, Text, GridItem } from "@chakra-ui/react";
+
+import { CartContext } from "../../context";
 
 interface Props {}
 
 export default function OrderSummary({}: Props) {
+  const { summary } = useContext(CartContext);
+
   return (
     <Container maxW="80rem" my="4">
       <Grid gridTemplateColumns={"repeat(2,1fr)"}>
@@ -14,7 +20,7 @@ export default function OrderSummary({}: Props) {
         <GridItem>
           <Flex justifyContent={"end"} alignItems="center">
             <Text as="h3" fontFamily="Less" fontSize="md">
-              3 items
+              {`${summary.total_of_items}`}
             </Text>
           </Flex>
         </GridItem>
@@ -26,7 +32,7 @@ export default function OrderSummary({}: Props) {
         <GridItem my={4}>
           <Flex justifyContent={"end"} alignItems="center">
             <Text as="h3" fontFamily="Less" fontSize="md">
-              {`$ ${300}`}
+              {`$ ${summary.total_of_price}`}
             </Text>
           </Flex>
         </GridItem>
@@ -39,7 +45,7 @@ export default function OrderSummary({}: Props) {
         <GridItem>
           <Flex justifyContent={"end"} alignItems="center">
             <Text as="h3" fontFamily="Less" fontSize="md">
-              {`$ ${Math.round((300 * 1.08647) / 100)}`}
+              {`$ ${summary.taxes}`}
             </Text>
           </Flex>
         </GridItem>
@@ -51,7 +57,7 @@ export default function OrderSummary({}: Props) {
         <GridItem my={8}>
           <Flex justifyContent={"end"} alignItems="center">
             <Text as="h3" fontFamily="Less" fontSize="xl" fontWeight="bold">
-              {`$ ${326}`}
+              {`$ ${summary.total_of_price_with_taxes}`}
             </Text>
           </Flex>
         </GridItem>

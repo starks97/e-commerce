@@ -1,11 +1,10 @@
 export interface ICart {
-  _id?: string;
+  _id: string;
   images: string;
   price: number;
   sizes: ValidSizes | null;
   slug: string;
   title: string;
-  gender: Genders | null;
   quantity: number;
 }
 
