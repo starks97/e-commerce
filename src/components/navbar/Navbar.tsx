@@ -17,6 +17,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -25,85 +26,102 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+
 import { NavItem, NAV_ITEMS } from "./navTypes";
 import ShopCart from "../../assets/ShopCart.svg";
 
 import { SearchInput } from "../searchInput";
 
 export default function WithSubnavigation() {
+  const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Box>
-      <Flex
-        bg={useColorModeValue("white", "gray.800")}
-        color={useColorModeValue("gray.600", "white")}
-        minH={"60px"}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
-        align={"center"}
-      >
+    <>
+      <Box bg={useColorModeValue("black", "gray.800")} margin="0" >
         <Flex
-          flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
-          display={{ base: "flex", md: "none" }}
+          color={useColorModeValue("gray.600", "white")}
+          minH={"60px"}
+          py={{ base: 2 }}
+          px={{ base: 4 }}
+          borderBottom={1}
+          borderStyle={"solid"}
+          borderColor={useColorModeValue("gray.200", "gray.900")}
+          align={"center"}
         >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={"ghost"}
-            aria-label={"Toggle Navigation"}
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <NextLink href="/">
-            <Button variant="none">
-              <Text
-                textAlign={useBreakpointValue({ base: "center", md: "left" })}
-                fontFamily={"Less"}
-                color={useColorModeValue("gray.800", "white")}
-                fontSize={"3xl"}
-                fontWeight={"bold"}
-              >
-                Teslo | Shop
-              </Text>
-            </Button>
-          </NextLink>
-
           <Flex
-            display={{ base: "none", md: "flex" }}
-            alignItems="center"
-            ml={20}
+            flex={{ base: 1, md: "auto" }}
+            ml={{ base: -2 }}
+            display={{ base: "flex", md: "none" }}
+            alignItems={"center"}
+            justifyContent={"space-between"}
           >
-            <DesktopNav />
+            <IconButton
+              onClick={onToggle}
+              icon={
+                isOpen ? (
+                  <CloseIcon w={3} h={3} />
+                ) : (
+                  <HamburgerIcon w={5} h={5} />
+                )
+              }
+              variant={"ghost"}
+              aria-label={"Toggle Navigation"}
+            />
           </Flex>
+          <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+            <NextLink href="/">
+              <Button variant="none">
+                <Text
+                  textAlign={useBreakpointValue({ base: "center", md: "left" })}
+                  fontFamily={"Less"}
+                  color={useColorModeValue("gray.800", "white")}
+                  fontSize={"3xl"}
+                  fontWeight={"bold"}
+                >
+                  Teslo | Shop
+                </Text>
+              </Button>
+            </NextLink>
+
+            <Flex
+              display={{ base: "none", md: "flex" }}
+              alignItems="center"
+              ml={20}
+            >
+              <DesktopNav />
+            </Flex>
+          </Flex>
+
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={"flex-end"}
+            direction={"row"}
+            spacing={6}
+            alignItems="center"
+          >
+            <SearchInput />
+            {/*<Button onClick={toggleColorMode}>
+            {colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
+          </Button>*/}
+            <NextLink href="/cart" passHref>
+              <Button size="sm" variant="none" style={{ color: "white" }}>
+                <Image
+                  src={ShopCart}
+                  layout="fill"
+                  style={{ background: "white" }}
+                />
+              </Button>
+            </NextLink>
+          </Stack>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-          alignItems="center"
-        >
-          <SearchInput />
-          <NextLink href="/cart" passHref>
-            <Button size="sm" variant="none">
-              <Image src={ShopCart} layout="fill" />
-            </Button>
-          </NextLink>
-        </Stack>
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
-    </Box>
+        <Collapse in={isOpen} animateOpacity>
+          <MobileNav />
+        </Collapse>
+      </Box>
+    </>
   );
 }
 

@@ -1,14 +1,25 @@
 import type { StyleFunctionProps } from "@chakra-ui/theme-tools";
-import { extendTheme, type ChakraTheme } from "@chakra-ui/react";
+import {
+  ChakraTheme,
+  extendTheme,
+  type ThemeConfig,
+  withDefaultColorScheme,
+} from "@chakra-ui/react";
+
+/*const config: ThemeConfig = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
+};*/
 
 export const theme = extendTheme({
+  //config,
   styles: {
     global: (theme: StyleFunctionProps) => ({
       "*": {
         scrollBehavior: "smooth",
       },
       body: {
-        backgroundColor: theme.theme.colors.white,
+        backgroundColor: theme.theme.colors.gray[50],
         color: theme.theme.colors.black,
         lineHeight: "1",
         minH: "100vh",
@@ -38,7 +49,7 @@ export const theme = extendTheme({
     logo: "#9c7e79",
 
     background: {
-      default: "#dfccc2",
+      default: "#F0FFF0",
     },
   },
 
@@ -49,18 +60,8 @@ export const theme = extendTheme({
         underline: "none",
       },
     },
-    GlobalAppBar: {
-      defaultProps: {
-        elevation: 0,
-        position: "fixed",
-      },
-      styleOverrides: {
-        root: {
-          backgroundColor: "white",
-          height: 60,
-        },
-      },
-    },
+    
+
     GlobalTypography: {
       styleOverrides: {
         h1: {

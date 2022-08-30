@@ -39,7 +39,7 @@ export default function SearchInput() {
   return (
     <>
       <IconButton
-        icon={<SearchIcon />}
+        icon={<SearchIcon style={{color: "white"}}/>}
         fontSize={"xl"}
         aria-label="Search"
         variant={"none"}
