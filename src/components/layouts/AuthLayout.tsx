@@ -24,9 +24,7 @@ export default function AuthLayout({
         <meta property="og:description" content={pageDescription} />
         {imageFullUrl && <meta name="og:image" content={imageFullUrl} />}
       </Head>
-      <main style={{ margin: "20px auto", padding: "0px 20px" }}>
-        {children}
-      </main>
+      <main>{children}</main>
     </>
   );
 }

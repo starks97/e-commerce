@@ -8,7 +8,7 @@ type Props = {};
 
 export default function RegisterPage({}: Props) {
   return (
-    <AuthLayout title="Login" pageDescription="register your account">
+    <AuthLayout title="Register" pageDescription="register your account">
       <Signup />
     </AuthLayout>
   );

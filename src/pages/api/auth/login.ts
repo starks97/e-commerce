@@ -41,6 +41,12 @@ export default methodSwitcher({
       if (!token) {
         return res.status(401).json({ message: "invalid token" });
       }
+      const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toString();
+
+      res.setHeader(
+        "Set-Cookie",
+        `Ecommerce_token=${token}; Path=/; HttpOnly; Expires=${expires}; SameSite=Strict`
+      );
 
       return res.status(200).json({ token, user: { email, name, role } });
     } catch (e) {

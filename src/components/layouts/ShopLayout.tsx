@@ -3,8 +3,7 @@ import React from "react";
 
 import { Product } from "@prisma/client";
 
-
-interface Props  {
+interface Props {
   title: string;
   pageDescription: string;
   imageFullUrl?: string;
@@ -29,9 +28,7 @@ export default function ShopLayout({
 
       <nav>{/*navbar*/}</nav>
 
-      <main style={{ margin: "20px auto", padding: "0px 20px" }}>
-        {children}
-      </main>
+      <main>{children}</main>
 
       <footer>{/*footer*/}</footer>
     </>

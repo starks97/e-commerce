@@ -14,7 +14,6 @@ type Data =
       user: {
         email: string;
         name: string;
-        role: string;
       };
     };
 
@@ -44,16 +43,16 @@ export default methodSwitcher({
       }
 
       if (!isValidEmail(email)) {
-        return res.status(400).json({ message: "Email format is not valid " });
+        return res.status(401).json({ message: "Email format is not valid " });
       }
 
       const user = await UserAuth.registerUser(req.body);
 
       if (!user) {
-        return res.status(400).json({ message: "email already exists" });
+        return res.status(401).json({ message: "email already exists" });
       }
 
-      const token = new GenerateJWT(user!.id, user!.email).generateJWT();
+      const token = new GenerateJWT(user.id, user.email).generateJWT();
 
       //set token in cookies
 
@@ -64,9 +63,7 @@ export default methodSwitcher({
         `Ecommerce_token=${token}; Path=/; HttpOnly; Expires=${expires}; SameSite=Strict`
       );
 
-      return res
-        .status(200)
-        .json({ token, user: { email, name, role: "client" } });
+      return res.status(200).json({ token, user: { email, name } });
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         // The .code property can be accessed in a type-safe manner

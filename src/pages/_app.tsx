@@ -6,7 +6,7 @@ import type { AppProps } from "next/app";
 
 import { SWRConfig } from "swr";
 import styles from "../styles/global.module.css";
-import { CartProvider } from "../context";
+import { AuthProvider, CartProvider } from "../context";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -17,13 +17,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           fetch(resource, init).then((res) => res.json()),
       }}
     >
-      <CartProvider>
-        <ChakraProvider resetCSS theme={theme}>
-          <LightMode>
-            <Component {...pageProps} />
-          </LightMode>
-        </ChakraProvider>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <ChakraProvider resetCSS theme={theme}>
+            <LightMode>
+              <Component {...pageProps} />
+            </LightMode>
+          </ChakraProvider>
+        </CartProvider>
+      </AuthProvider>
     </SWRConfig>
   );
 }

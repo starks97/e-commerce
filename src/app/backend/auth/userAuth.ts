@@ -11,7 +11,7 @@ export class UserAuth {
     ...user
   }: Omit<User, "createdAt" | "updatedAt">): Promise<Omit<
     User,
-     "createdAt" | "updatedAt"
+    "createdAt" | "updatedAt"
   > | null> {
     const prisma = await PrismaDB.getInstance();
 
@@ -25,6 +25,7 @@ export class UserAuth {
           password,
           name,
           ...user,
+          role: "user",
         },
       });
       if (!data) return null;
@@ -54,6 +55,7 @@ export class UserAuth {
             email: email,
           },
         });
+        console.log(data);
         if (!data) return null;
 
         const isVerifiedPassword =
@@ -78,7 +80,9 @@ export class UserAuth {
     return null;
   }
 
-  static async verifyId(id: string):Promise<Omit<User, "created_at" | "updatedAt" | "password"> | null> {
+  static async verifyId(
+    id: string
+  ): Promise<Omit<User, "created_at" | "updatedAt" | "password"> | null> {
     const prisma = await PrismaDB.getInstance();
 
     try {

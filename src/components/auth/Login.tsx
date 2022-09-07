@@ -1,4 +1,7 @@
-import Link from 'next/link'
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+
+import Link from "next/link";
+import { NextRouter, useRouter } from "next/router";
 
 import {
   Flex,
@@ -14,7 +17,37 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import { AuthContext } from "../../context";
+
 export default function SimpleCard() {
+  const { loginUser } = useContext(AuthContext);
+
+  const router: NextRouter = useRouter();
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [islogin, setIsLogin] = useState<boolean>(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await loginUser(data.email, data.password);
+      if (response) {
+        setIsLogin(true);
+        router.push("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    router.prefetch("/");
+  }, []);
+
   return (
     <Flex
       minH={"100vh"}
@@ -33,39 +66,61 @@ export default function SimpleCard() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={10}>
-              <Stack
-                direction={{ base: "column", sm: "row" }}
-                align={"start"}
-                justify={"space-between"}
-              >
-                <Checkbox>Remember me</Checkbox>
-                <Link href='/' color={"blue.400"}>Forgot password?</Link>
+            <form onSubmit={handleSubmit}>
+              <FormControl id="email" isRequired borderColor="gray" marginBottom="1rem">
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type="email"
+                  value={data.email}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setData({ ...data, email: e.target.value })
+                  }
+                />
+              </FormControl>
+              <FormControl id="password" isRequired borderColor="gray" marginBottom="1rem">
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  value={data.password}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setData({ ...data, password: e.target.value })
+                  }
+                />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: "column", sm: "row" }}
+                  align={"start"}
+                  justify={"space-between"}
+                >
+                  <Checkbox borderColor="gray">Remember me</Checkbox>
+                  <Link href="/" color={"blue.400"}>
+                    Forgot password?
+                  </Link>
+                </Stack>
+                <Button
+                  type="submit"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  isLoading={islogin}
+                  loadingText="Logging in..."
+                >
+                  Sign in
+                </Button>
               </Stack>
-              <Button
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                Sign in
-              </Button>
-            </Stack>
+            </form>
           </Stack>
           <Stack pt={6}>
-              <Text align={"center"}>
-                You dont have account yet? <Link href='/auth/register' color={"blue.400"}>register</Link>
-              </Text>
-            </Stack>
+            <Text align={"center"}>
+              You dont have account yet?{" "}
+              <Link href="/auth/register" color={"blue.400"}>
+                register
+              </Link>
+            </Text>
+          </Stack>
         </Box>
       </Stack>
     </Flex>
