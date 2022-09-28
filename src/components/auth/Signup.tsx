@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 
 import Link from "next/link";
 
@@ -40,6 +40,8 @@ export default function SignupCard() {
     name: "",
   });
 
+  const destination = router.query.p?.toString() || "/";
+
   const onRegisterForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -55,11 +57,15 @@ export default function SignupCard() {
         setIsRegister(false);
       }
 
-      router.push("/");
+      router.replace(destination);
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    router.prefetch(destination);
+  }, [])
 
   return (
     <Flex
@@ -146,7 +152,14 @@ export default function SignupCard() {
               <Stack pt={6}>
                 <Text align={"center"}>
                   Already a user?{" "}
-                  <Link href="/auth/login" color={"blue.400"}>
+                  <Link
+                    href={
+                      router.query.p
+                        ? `/auth/login?p=${router.query.p}`
+                        : "/auth/login"
+                    }
+                    color={"blue.400"}
+                  >
                     Login
                   </Link>
                 </Text>

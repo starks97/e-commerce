@@ -23,7 +23,7 @@ export const NAV_ITEMS: Array<NavItem> = [
     href: "/category/unisex",
   },
   {
-    label: "Open",
+    label: "Account",
     children: [
       {
         label: "Profile",
@@ -36,17 +36,15 @@ export const NAV_ITEMS: Array<NavItem> = [
         href: "#orders",
       },
       {
-        label: "Sigin",
-        subLabel: "Sigin in your account",
-        href: "#sigin",
-      },
-      {
         label: "Logout",
         subLabel: "Logout from your account",
-        href: "#logout",
+        href: "",
       },
     ],
   },
+];
+
+export const NavItemsAdmin: Array<NavItem> = [
   {
     label: "Admin",
     children: [

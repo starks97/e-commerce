@@ -26,6 +26,7 @@ export default methodSwitcher({
       const { email = "", password = "" }: { email: string; password: string } =
         req.body;
 
+
       const user = await UserAuth.login(email, password);
 
       if (!user) {
@@ -45,7 +46,7 @@ export default methodSwitcher({
 
       res.setHeader(
         "Set-Cookie",
-        `Ecommerce_token=${token}; Path=/; HttpOnly; Expires=${expires}; SameSite=Strict`
+        `Ecommerce_token=${token}; Path=/; Expires=${expires}; SameSite=Strict`
       );
 
       return res.status(200).json({ token, user: { email, name, role } });

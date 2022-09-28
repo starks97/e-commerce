@@ -7,6 +7,7 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import styles from "../styles/global.module.css";
 import { AuthProvider, CartProvider } from "../context";
+import { useContext, useEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

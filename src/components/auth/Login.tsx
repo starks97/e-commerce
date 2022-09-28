@@ -31,13 +31,20 @@ export default function SimpleCard() {
 
   const [islogin, setIsLogin] = useState<boolean>(false);
 
+  const destination = router.query.p?.toString() || "/";
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await loginUser(data.email, data.password);
+
+      //redirect to page that user was trying to access
+     
+
       if (response) {
         setIsLogin(true);
-        router.push("/");
+
+        router.replace(destination);
       }
     } catch (err) {
       console.log(err);
@@ -45,7 +52,7 @@ export default function SimpleCard() {
   };
 
   useEffect(() => {
-    router.prefetch("/");
+    router.prefetch(destination);
   }, []);
 
   return (
@@ -67,7 +74,12 @@ export default function SimpleCard() {
         >
           <Stack spacing={4}>
             <form onSubmit={handleSubmit}>
-              <FormControl id="email" isRequired borderColor="gray" marginBottom="1rem">
+              <FormControl
+                id="email"
+                isRequired
+                borderColor="gray"
+                marginBottom="1rem"
+              >
                 <FormLabel>Email address</FormLabel>
                 <Input
                   type="email"
@@ -77,7 +89,12 @@ export default function SimpleCard() {
                   }
                 />
               </FormControl>
-              <FormControl id="password" isRequired borderColor="gray" marginBottom="1rem">
+              <FormControl
+                id="password"
+                isRequired
+                borderColor="gray"
+                marginBottom="1rem"
+              >
                 <FormLabel>Password</FormLabel>
                 <Input
                   type="password"
@@ -116,7 +133,14 @@ export default function SimpleCard() {
           <Stack pt={6}>
             <Text align={"center"}>
               You dont have account yet?{" "}
-              <Link href="/auth/register" color={"blue.400"}>
+              <Link
+                href={
+                  router.query.p
+                    ? `/auth/register?p=${router.query.p}`
+                    : "/auth/register"
+                }
+                color={"blue.400"}
+              >
                 register
               </Link>
             </Text>

@@ -41,7 +41,6 @@ export default function ProductCard({ product }: Props) {
           borderWidth="1px"
           rounded="lg"
           shadow="lg"
-          maxW="fit-content"
         >
           {product.inStock === 0 && (
             <Tag

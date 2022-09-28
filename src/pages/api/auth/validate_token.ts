@@ -9,7 +9,6 @@ type Data =
   | {
       token: string;
       user: {
-        id: string;
         email: string;
         name: string;
         role: string;
@@ -37,7 +36,7 @@ export default methodSwitcher({
         return;
       }
 
-      const { role, name, email, id } = user;
+      const { role, name, email } = user;
       const new_token = new GenerateJWT(
         await decoded,
         user.email
@@ -45,7 +44,7 @@ export default methodSwitcher({
 
       return res
         .status(200)
-        .json({ token: new_token, user: { name, email, role, id } });
+        .json({ token: new_token, user: { name, email, role} });
     } catch (e) {
       return console.log(e);
     }

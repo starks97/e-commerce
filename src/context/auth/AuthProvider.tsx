@@ -1,4 +1,8 @@
-import React, { FC, useEffect, useReducer } from "react";
+import React, { FC, useEffect, useReducer, useState } from "react";
+
+import {useRouter} from "next/router"
+
+import Cookies from "js-cookie";
 
 import { AuthContext, IUser } from "./AuthContext";
 import { authReducer } from "./authReducer";
@@ -20,12 +24,18 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
+  const token = Cookies.get("Ecommerce_token");
+
+  const router = useRouter()
+
 
   useEffect(() => {
     checkToken();
   }, []);
 
   const checkToken = async () => {
+    if (!token!) return;
+
     try {
       const response = await fetch("/api/auth/validate_token", {
         method: "GET",
@@ -39,13 +49,15 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
 
         dispatch({
           type: "[Auth] - Login",
-          payload: { token, user: parsedUser },
+          payload: { token, user: { role, ...parsedUser } },
         });
+        return;
       }
+
       return response;
     } catch (err) {
       console.log(err, "user not authenticated");
-      return false;
+      return null;
     }
   };
 
@@ -70,7 +82,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
 
       dispatch({
         type: "[Auth] - Login",
-        payload: { token, user: parsedUser },
+        payload: { token, user: { role, ...parsedUser} },
       });
       return true;
     } catch (err) {
@@ -93,14 +105,13 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
       if (data.ok) {
         const userRegistered = await data.json();
 
-        const { user, token } = userRegistered;
+        const { user, token,  } = userRegistered;
 
         const { role, ...parsedUser } = user;
 
-        console.log(parsedUser);
         dispatch({
           type: "[Auth] - Login",
-          payload: { token, user: parsedUser },
+          payload: { token, user: { role, ...parsedUser } },
         });
         return { hasError: false };
       }
@@ -113,6 +124,13 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const logout = () => {
+    Cookies.remove("Ecommerce_token");
+    Cookies.remove("cart");
+    dispatch({ type: "[Auth] - Logout" });
+    router.reload()
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -121,6 +139,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
         // Methods
         loginUser,
         registerUser,
+        logout
       }}
     >
       {children}

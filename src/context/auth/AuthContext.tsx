@@ -8,6 +8,8 @@ export interface IUser {
   role: string;
 }
 
+type Roles = "client" | "admin";
+
 interface IAuth {
   isLoggedIn: boolean;
   auth?: {
@@ -20,6 +22,7 @@ interface IAuth {
     password: string,
     name: string
   ) => Promise<{ hasError: boolean }>;
+  logout: () => void;
 }
 
 export const AuthContext = createContext({} as IAuth);

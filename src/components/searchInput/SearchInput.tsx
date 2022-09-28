@@ -39,7 +39,7 @@ export default function SearchInput() {
   return (
     <>
       <IconButton
-        icon={<SearchIcon style={{color: "white"}}/>}
+        icon={<SearchIcon style={{ color: "white" }} />}
         fontSize={"xl"}
         aria-label="Search"
         variant={"none"}
@@ -50,8 +50,8 @@ export default function SearchInput() {
       />
       <Modal onClose={onClose} isOpen={isOpen}>
         {overlay}
-        <ModalContent bg="blackAlpha.500" maxW="35rem" marginTop="5rem">
-          <ModalBody>
+        <ModalContent bg="blackAlpha.500" marginTop="5rem">
+          <ModalBody >
             <Stack spacing={3}>
               <Input
                 variant="outline"
@@ -64,7 +64,7 @@ export default function SearchInput() {
                 onBlur={onClose}
                 bg="blackAlpha.500"
                 color="white"
-                sx={{ width: { base: "20rem", sm: "25rem", md: "32rem" } }}
+               
                 onKeyPress={(e: React.KeyboardEvent) =>
                   e.key === "Enter" ? onSearch() : null
                 }

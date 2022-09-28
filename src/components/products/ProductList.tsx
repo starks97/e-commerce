@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, Text } from "@chakra-ui/react";
 import { Product } from "@prisma/client";
 
 import ProductCard from "./ProductCard";
@@ -10,8 +10,8 @@ interface Props {
 
 export default function ProductList({ products, title }: Props) {
   return (
-    <Container maxW="90rem">
-      <Box marginTop="5" marginBottom="10">
+    <Container maxW="90rem" justifyContent="center">
+      <Flex marginTop="5" marginBottom="10" marginLeft={"1rem"}>
         <Text
           fontSize="4xl"
           fontFamily="Less"
@@ -20,7 +20,7 @@ export default function ProductList({ products, title }: Props) {
         >
           {title}
         </Text>
-      </Box>
+      </Flex>
       <Grid
         gridTemplateColumns={{
           base: "repeat(1, 1fr)",
@@ -30,6 +30,8 @@ export default function ProductList({ products, title }: Props) {
           xl: "repeat(4, 1fr)",
         }}
         gridGap={{ base: "1rem", md: "2rem" }}
+        justifyItems="center"
+        alignItems="center"
       >
         {products.map((item) => (
           <ProductCard key={item.slug} product={item} />

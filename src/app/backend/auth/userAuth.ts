@@ -16,7 +16,7 @@ export class UserAuth {
     const prisma = await PrismaDB.getInstance();
 
     //hashed password
-    password = await GenerateCryptPassword.setHashPassword(password);
+    password = GenerateCryptPassword.setHashPassword(password);
 
     try {
       const data = await prisma.user.create({
@@ -25,7 +25,8 @@ export class UserAuth {
           password,
           name,
           ...user,
-          role: "user",
+          role: "admin"
+          
         },
       });
       if (!data) return null;
