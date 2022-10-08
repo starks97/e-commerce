@@ -35,6 +35,7 @@ export default function DesktopNav  (){
                     textDecoration: "none",
                     color: linkHoverColor,
                   }}
+                  href={navItem.href}
                 >
                   {navItem.label}
                 </Link>
@@ -79,7 +80,6 @@ export default function DesktopNav  (){
                                 bg: "rgb(0,0,0,0.9)",
                               }}
                               w="100%"
-                              
                             >
                               Sign in
                             </Button>

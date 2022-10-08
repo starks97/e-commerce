@@ -2,7 +2,7 @@ import { methodSwitcher } from "../../../utils";
 
 import { UserAuth } from "../../../app/backend/auth";
 
-import { GenerateJWT } from "../../../app/backend/auth";
+import { Token } from "../../../utils";
 import { NextApiResponse } from "next";
 
 type Data =
@@ -37,7 +37,7 @@ export default methodSwitcher({
 
       const { role, name } = user;
 
-      const token = new GenerateJWT(user.id, user.email).generateJWT();
+      const token = await new Token(user.id, user.email).generateJWT();
 
       if (!token) {
         return res.status(401).json({ message: "invalid token" });

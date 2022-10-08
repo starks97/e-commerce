@@ -8,25 +8,43 @@ import {
   Stack,
   GridItem,
   InputGroup,
+  FormControl,
   InputLeftElement,
   Select,
   Button,
+  FormLabel,
+  InputLeftAddon,
 } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 
 import { ShopLayout } from "../../components/layouts";
+import { Navbar } from "../../components/navbar";
 
-type Props = {};
+type FormProps = {
+  name: string;
+  address: string;
+  zipCode: string
+  country: string;
+  telephone: string;
+  lastname: string;
+  adress2: string;
+  city: string;
+};
 
-export default function addressPage({}: Props) {
+export default function addressPage({}: FormProps) {
+
+  const {register, handleSubmit, formState: {errors}} = useForm<FormProps>()
+
   return (
     <ShopLayout
       title="Check Address"
       pageDescription="Checking address and updating"
     >
-      <Container maxW="80rem">
+      <Navbar />
+      <Container maxW="80rem" marginTop="2rem">
         <Flex>
           <Text as="h1" fontSize="3xl">
-            Check Address
+            Check Info
           </Text>
         </Flex>
         <Grid
@@ -36,29 +54,59 @@ export default function addressPage({}: Props) {
         >
           <GridItem>
             <Stack spacing="3">
-              <Input placeholder="Name" size="md" />
-              <Input placeholder="Address" size="md" />
-              <Input placeholder="Postal Code" size="md" />
-              <Select placeholder="Select Country">
-                <option value="Country">United State</option>
-                <option value="Country">Spain</option>
-                <option value="Country">Ecuador</option>
-              </Select>
+              <FormControl id="name" mt={4} isRequired borderColor="black">
+                <FormLabel>Name</FormLabel>
+                <Input placeholder="Name" size="md" />
+              </FormControl>
+
+              <FormControl id="address" mt={4} isRequired borderColor="black">
+                <FormLabel>Address</FormLabel>
+                <Input placeholder="Address" size="md" />
+              </FormControl>
+
+              <FormControl
+                id="Postal Code"
+                mt={4}
+                isRequired
+                borderColor="black"
+              >
+                <FormLabel>ZIP Code</FormLabel>
+                <Input placeholder="Postal Code" size="md" type="number" />
+              </FormControl>
+
+              <FormControl>
+                <FormLabel>Select Country</FormLabel>
+                <Select placeholder="Select Country" borderColor="black">
+                  <option value="Country">United State</option>
+                  <option value="Country">Spain</option>
+                  <option value="Country">Ecuador</option>
+                </Select>
+              </FormControl>
             </Stack>
           </GridItem>
 
           <GridItem>
             <Stack spacing="3">
-              <Input placeholder="Last name" size="md" />
-              <Input placeholder="Address 2" size="md" />
-              <Input placeholder="City" size="md" />
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  /*children={<PhoneIcon color="gray.300" />}*/
-                />
-                <Input type="tel" placeholder="Phone number" />
-              </InputGroup>
+              <FormControl id="Last Name" mt={4} isRequired borderColor="black">
+                <FormLabel>Last Name</FormLabel>
+                <Input placeholder="Last Name" size="md" type="number" />
+              </FormControl>
+
+              <FormControl id="address 2" mt={4} borderColor="black">
+                <FormLabel>Address 2</FormLabel>
+                <Input placeholder="Address 2" size="md" />
+              </FormControl>
+              <FormControl id="city" mt={4} isRequired borderColor="black">
+                <FormLabel>City</FormLabel>
+                <Input placeholder="City" size="md" />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Telephone</FormLabel>
+                <InputGroup borderColor="black">
+                  <InputLeftAddon children="+1" />
+                  <Input type="tel" placeholder="phone number" />
+                </InputGroup>
+              </FormControl>
             </Stack>
           </GridItem>
         </Grid>

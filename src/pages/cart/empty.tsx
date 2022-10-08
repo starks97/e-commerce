@@ -16,6 +16,7 @@ export default function empty({}: Props) {
       title={"Empty car"}
       pageDescription={"there are no items at the moment"}
     >
+      <Navbar />
       <Flex
         justifyContent="center"
         alignItems="center"
@@ -25,7 +26,7 @@ export default function empty({}: Props) {
         <Image src={emptyCart} alt="empty cart" width={100} height={100} />
 
         <Text fontSize="2xl" fontWeight="light" fontFamily="Less">
-          There are not elements yet available.
+          There are not elements available.
         </Text>
 
         <Link href="/" passHref>

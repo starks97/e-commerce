@@ -1,11 +1,10 @@
-import * as crypto from "crypto";
+import CryptoES from 'crypto-es';
 
 export default class GenerateCryptPassword {
   static setHashPassword(password: string) {
-    const hashedPassword = crypto
-      .createHash("sha256")
-      .update(password)
-      .digest("base64");
+    const hashedPassword = CryptoES.SHA256(password).toString(
+      CryptoES.enc.Base64
+    );
     return hashedPassword;
   }
 

@@ -123,7 +123,7 @@ export default function SimpleCard() {
                     bg: "blue.500",
                   }}
                   isLoading={islogin}
-                  loadingText="Logging in..."
+                  loadingText="Login..."
                 >
                   Sign in
                 </Button>

@@ -1,6 +1,5 @@
 import { Prisma, User } from "@prisma/client";
-import { GenerateJWT } from "./";
-import { GenerateCryptPassword } from "./";
+import { GenerateCryptPassword } from "../../../utils";
 import { PrismaDB } from "../../db";
 
 export class UserAuth {
@@ -25,8 +24,7 @@ export class UserAuth {
           password,
           name,
           ...user,
-          role: "admin"
-          
+          role: "admin",
         },
       });
       if (!data) return null;
@@ -56,14 +54,13 @@ export class UserAuth {
             email: email,
           },
         });
-        console.log(data);
+
         if (!data) return null;
 
-        const isVerifiedPassword =
-          await GenerateCryptPassword.compareHashPassword(
-            password,
-            data.password
-          );
+        const isVerifiedPassword = GenerateCryptPassword.compareHashPassword(
+          password,
+          data.password
+        );
         if (!isVerifiedPassword) return null;
         return data;
       }

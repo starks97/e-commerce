@@ -8,6 +8,7 @@ import { CartContext, cartReducer } from "./";
 export interface CartState {
   cart: ICart[];
   summary: ISummary;
+  isLoaded: boolean
 }
 
 const CART_INITIAL_STATE: CartState = {
@@ -18,6 +19,7 @@ const CART_INITIAL_STATE: CartState = {
     taxes: 0,
     total_of_price_with_taxes: 0,
   },
+  isLoaded: false
 };
 
 export const CartProvider: FC<{ children: React.ReactNode }> = ({
@@ -121,6 +123,7 @@ export const CartProvider: FC<{ children: React.ReactNode }> = ({
         addProductToCart,
         updateQuantityProduct,
         deleteProduct,
+        
       }}
     >
       {children}

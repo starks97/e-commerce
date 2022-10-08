@@ -2,10 +2,11 @@ import { NextApiResponse } from "next";
 
 import { methodSwitcher } from "../../../utils";
 
-import { GenerateJWT, UserAuth } from "../../../app/backend/auth";
+import { Token} from "../../../utils";
 import { Prisma } from "@prisma/client";
 
 import { isValidEmail } from "../../../utils";
+import { UserAuth } from "../../../app/backend/auth";
 
 type Data =
   | { message: string }
@@ -52,7 +53,7 @@ export default methodSwitcher({
         return res.status(401).json({ message: "email already exists" });
       }
 
-      const token = new GenerateJWT(user.id, user.email).generateJWT();
+      const token = await new Token(user.id, user.email).generateJWT();
 
       //set token in cookies
 
