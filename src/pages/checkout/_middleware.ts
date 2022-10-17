@@ -1,5 +1,5 @@
 import {NextResponse, NextRequest, NextFetchEvent} from 'next/server'
-import {Token} from '../../utils'
+import { Token } from "../../utils";
 
 
 export async function middleware (req: NextRequest, even: NextFetchEvent) {

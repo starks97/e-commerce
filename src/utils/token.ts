@@ -1,4 +1,4 @@
-import * as jose from 'jose'
+import * as jose from "jose";
 
 if (!process.env.JSON_WEB_TOKEN_KEY) {
   console.error("JSON_WEB_TOKEN_KEY is not set");
@@ -8,7 +8,7 @@ if (!process.env.JSON_WEB_TOKEN_KEY) {
 export class Token {
   constructor(public id: string, public email: string) {}
 
-  public async  generateJWT(): Promise<string> {
+  public async generateJWT(): Promise<string> {
     return await new jose.SignJWT({
       id: this.id,
       email: this.email,
@@ -18,7 +18,7 @@ export class Token {
       .sign(new TextEncoder().encode(process.env.JSON_WEB_TOKEN_KEY));
   }
 
-  static async decoded(token: string): Promise<string>{
+  static async decoded(token: string): Promise<string> {
     const { payload } = await jose.jwtVerify(
       token,
       new TextEncoder().encode(process.env.JSON_WEB_TOKEN_KEY)
@@ -26,4 +26,3 @@ export class Token {
     return payload.id as string;
   }
 }
-

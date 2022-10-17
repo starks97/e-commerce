@@ -4,3 +4,5 @@ export { default as TrackerTitle } from "./TrackerTitle";
 export * from "./TrackerTitle";
 
 export { default as ErrorMesssage } from "./ErrorMessage";
+
+export { default as EditReviewForm } from "./EditReviewForm";

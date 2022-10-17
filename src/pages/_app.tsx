@@ -6,7 +6,7 @@ import type { AppProps } from "next/app";
 
 import { SWRConfig } from "swr";
 import styles from "../styles/global.module.css";
-import { AuthProvider, CartProvider } from "../context";
+import { AuthProvider, CartProvider, DataProvider } from "../context";
 import { useContext, useEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -19,13 +19,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       }}
     >
       <AuthProvider>
-        <CartProvider>
-          <ChakraProvider resetCSS theme={theme}>
-            <LightMode>
-              <Component {...pageProps} />
-            </LightMode>
-          </ChakraProvider>
-        </CartProvider>
+        <DataProvider>
+          <CartProvider>
+            <ChakraProvider resetCSS theme={theme}>
+              <LightMode>
+                <Component {...pageProps} />
+              </LightMode>
+            </ChakraProvider>
+          </CartProvider>
+        </DataProvider>
       </AuthProvider>
     </SWRConfig>
   );

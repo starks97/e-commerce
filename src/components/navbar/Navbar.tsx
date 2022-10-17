@@ -13,25 +13,24 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Icon,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
-
-import { NavItemsAdmin, NAV_ITEMS } from "./navTypes";
+import { NavItem, NavItemsAdmin, NAV_ITEMS } from "./navTypes";
 import ShopCart from "../../assets/ShopCart.svg";
 
 import { SearchInput } from "../searchInput";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { AuthContext } from "../../context";
-import MobileNavItem from "./MobileNavItem";
 import DesktopNav from "./DesktopNav";
 import DesktopAdminNav from "./DesktopAdminNav";
+import { useRouter } from "next/router";
 
 export default function WithSubnavigation() {
-
   const { isOpen, onToggle } = useDisclosure();
 
-  const {auth} = useContext(AuthContext)
+  const { auth } = useContext(AuthContext);
 
   return (
     <>
@@ -122,8 +121,6 @@ export default function WithSubnavigation() {
   );
 }
 
-
-
 const MobileNav = () => {
   return (
     <Stack
@@ -152,18 +149,108 @@ const MobileAdminNav = () => {
     >
       {NavItemsAdmin.map((navItem) => (
         <MobileNavItem
-        key={navItem.label}
-        href={navItem.href!}
-        label={navItem.label}
-        children={navItem.children!}
-      />
-
+          key={navItem.label}
+          href={navItem.href!}
+          label={navItem.label}
+          children={navItem.children!}
+        />
       ))}
     </Stack>
+  );
+};
 
-  )
+interface Props {
+  label: string;
+  href: string;
+  children: NavItem[];
 }
 
+function MobileNavItem({ label, children, href }: Props) {
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  const handleLogOut = () => {
+    const Logout = children.find((item) => item.label === "Logout");
 
+    if (Logout) {
+      logout();
+      return;
+    }
+  };
+  const { isOpen, onToggle } = useDisclosure();
+  const router = useRouter();
 
+  const linkColor = useColorModeValue("white", "white");
 
+  return (
+    <>
+      <Stack spacing={4} onClick={children && onToggle}>
+        <Flex
+          py={2}
+          as={Link}
+          justify={"space-between"}
+          align={"center"}
+          _hover={{
+            textDecoration: "none",
+          }}
+          href={href}
+        >
+          <Text fontWeight={600} color={useColorModeValue("white", "gray.200")}>
+            {label}
+          </Text>
+          {children && (
+            <Icon
+              as={ChevronDownIcon}
+              transition={"all .25s ease-in-out"}
+              transform={isOpen ? "rotate(180deg)" : ""}
+              w={6}
+              h={6}
+              color={useColorModeValue("white", "white")}
+            />
+          )}
+        </Flex>
+
+        <Collapse
+          in={isOpen}
+          animateOpacity
+          style={{ marginTop: "0!important" }}
+          color={useColorModeValue("white", "white")}
+        >
+          <Stack
+            mt={2}
+            pl={4}
+            borderLeft={1}
+            borderStyle={"solid"}
+            borderColor={useColorModeValue("white", "gray.700")}
+            align={"start"}
+          >
+            <>
+              {isLoggedIn ? (
+                <>
+                  {children &&
+                    children.map((child) => (
+                      <Link
+                        key={child.label}
+                        py={2}
+                        href={child.href!}
+                        onClick={handleLogOut}
+                        color={linkColor}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                </>
+              ) : (
+                <Link
+                  py={2}
+                  href={`/auth/login?p=${router.asPath}`}
+                  color={useColorModeValue("white", "white")}
+                >
+                  Login
+                </Link>
+              )}
+            </>
+          </Stack>
+        </Collapse>
+      </Stack>
+    </>
+  );
+}

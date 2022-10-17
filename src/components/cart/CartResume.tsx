@@ -8,7 +8,11 @@ import {
   Divider,
   Button,
 } from "@chakra-ui/react";
+
+import Link from "next/link";
+
 import { Product } from "@prisma/client";
+
 import { IProduct } from "../../interfaces";
 
 import CartList from "./CartList";
@@ -38,7 +42,7 @@ export default function CartResume({ product }: Props) {
           }}
           gap={5}
         >
-          <CartList editable product={product} />
+          <CartList editable />
           <GridItem>
             <Flex
               border="black"
@@ -55,13 +59,15 @@ export default function CartResume({ product }: Props) {
               <OrderSummary />
 
               <Box display="flex" flexDirection="column">
-                <Button
-                  bg="rgb(0,0,0, 0.8)"
-                  color="white"
-                  _hover={{ background: "rgb(0, 0, 0, 0.6)" }}
-                >
-                  Checkout
-                </Button>
+                <Link href="/checkout/review">
+                  <Button
+                    bg="rgb(0,0,0, 0.8)"
+                    color="white"
+                    _hover={{ background: "rgb(0, 0, 0, 0.6)" }}
+                  >
+                    Checkout
+                  </Button>
+                </Link>
               </Box>
             </Flex>
           </GridItem>
