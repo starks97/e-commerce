@@ -42,7 +42,7 @@ export default function CartResume({ product }: Props) {
           }}
           gap={5}
         >
-          <CartList editable />
+          <CartList editable product={product} />
           <GridItem>
             <Flex
               border="black"

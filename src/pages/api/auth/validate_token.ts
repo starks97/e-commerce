@@ -1,9 +1,9 @@
 import { NextApiResponse } from "next";
 import { UserAuth } from "../../../app/backend/auth";
 
-import { methodSwitcher } from "../../../utils";
+import { methodSwitcher } from "../../../app/utils";
 
-import { Token} from "../../../utils";
+import { Token } from "../../../app/utils";
 
 type Data =
   | { message: string }
@@ -38,11 +38,11 @@ export default methodSwitcher({
       }
 
       const { role, name, email } = user;
-      const new_token = await  new Token(decoded, user.email).generateJWT();
+      const new_token = await new Token(decoded, user.email).generateJWT();
 
       return res
         .status(200)
-        .json({ token: new_token, user: { name, email, role} });
+        .json({ token: new_token, user: { name, email, role } });
     } catch (e) {
       return console.log(e);
     }

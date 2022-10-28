@@ -32,7 +32,7 @@ export default function OrderSummary({}: Props) {
         <GridItem my={4}>
           <Flex justifyContent={"end"} alignItems="center">
             <Text as="h3" fontFamily="Less" fontSize="md">
-              {`$ ${summary.total_of_price}`}
+              {`$ ${summary.total_of_price.toFixed(2)}`}
             </Text>
           </Flex>
         </GridItem>
@@ -45,7 +45,7 @@ export default function OrderSummary({}: Props) {
         <GridItem>
           <Flex justifyContent={"end"} alignItems="center">
             <Text as="h3" fontFamily="Less" fontSize="md">
-              {`$ ${summary.taxes}`}
+              {`$ ${summary.taxes.toFixed(2)}`}
             </Text>
           </Flex>
         </GridItem>
@@ -57,7 +57,7 @@ export default function OrderSummary({}: Props) {
         <GridItem my={8}>
           <Flex justifyContent={"end"} alignItems="center">
             <Text as="h3" fontFamily="Less" fontSize="xl" fontWeight="bold">
-              {`$ ${summary.total_of_price_with_taxes}`}
+              {`$ ${summary.total_of_price_with_taxes.toFixed(2)}`}
             </Text>
           </Flex>
         </GridItem>

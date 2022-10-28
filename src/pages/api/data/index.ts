@@ -1,5 +1,5 @@
 import { DataUser } from "../../../app/backend/data_user";
-import { methodSwitcher, Token } from "../../../utils";
+import { methodSwitcher, Token } from "../../../app/utils";
 
 export default methodSwitcher({
     POST: async (req, res) => {

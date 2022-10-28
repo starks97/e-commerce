@@ -9,7 +9,7 @@ export interface DataProps {
   country: string;
   telephone: string;
   lastname: string;
-  adress2: string;
+  address2: string;
   city: string;
 }
 

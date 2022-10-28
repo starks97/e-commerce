@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useReducer, useState } from "react";
 
-import {useRouter} from "next/router"
+import { useRouter } from "next/router";
 
 import Cookies from "js-cookie";
 
@@ -26,8 +26,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
   const token = Cookies.get("Ecommerce_token");
 
-  const router = useRouter()
-
+  const router = useRouter();
 
   useEffect(() => {
     checkToken();
@@ -82,7 +81,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
 
       dispatch({
         type: "[Auth] - Login",
-        payload: { token, user: { role, ...parsedUser} },
+        payload: { token, user: { role, ...parsedUser } },
       });
       return true;
     } catch (err) {
@@ -105,7 +104,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
       if (data.ok) {
         const userRegistered = await data.json();
 
-        const { user, token,  } = userRegistered;
+        const { user, token } = userRegistered;
 
         const { role, ...parsedUser } = user;
 
@@ -128,8 +127,8 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
     Cookies.remove("Ecommerce_token");
     Cookies.remove("cart");
     dispatch({ type: "[Auth] - Logout" });
-    router.reload()
-  }
+    router.reload();
+  };
 
   return (
     <AuthContext.Provider
@@ -139,7 +138,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
         // Methods
         loginUser,
         registerUser,
-        logout
+        logout,
       }}
     >
       {children}

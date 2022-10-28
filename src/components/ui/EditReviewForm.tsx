@@ -1,3 +1,9 @@
+import React, { useContext, useState } from "react";
+
+import { useRouter } from "next/router";
+
+import { UserData } from "@prisma/client";
+
 import {
   Button,
   Flex,
@@ -11,14 +17,15 @@ import {
   Spacer,
   Stack,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { useContext } from "react";
-import { useForm } from "react-hook-form";
-import { DataContext } from "../../context";
-import { countries } from "../../utils";
+
+import { useForm, useController, UseControllerProps } from "react-hook-form";
+import { DataContext, DataProps } from "../../context";
+import countries from "../../utils/countries.json";
 import ErrorMessage from "./ErrorMessage";
 
-type Props = {};
+interface UserDataProps {
+  userData: UserData;
+}
 
 export type FormProps = {
   name: string;
@@ -27,38 +34,48 @@ export type FormProps = {
   country: string;
   telephone: string;
   lastname: string;
-  adress2: string;
+  address2: string;
   city: string;
 };
 
-export default function EditReviewForm({}: Props) {
-  const { createData_of_user, data } = useContext(DataContext);
+export default function EditReviewForm({ userData }: UserDataProps) {
+  const { createData_of_user, updateData_of_user } = useContext(DataContext);
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormProps>({
     defaultValues: {
-      name: "",
-      address: "",
-      zipCode: "",
-      country: countries[0].name,
-      telephone: "",
-      lastname: "",
-      adress2: "",
-      city: "",
+      name: userData.name,
+      address: userData.address,
+      zipCode: userData.zipCode,
+      country: userData.country,
+      telephone: userData.telephone,
+      lastname: userData.lastname,
+      address2: userData.address2,
+      city: userData.city,
     },
+    reValidateMode: "onChange",
   });
 
-  const handleOnSubmit = (data: FormProps) => {
+  const handleOnSubmit = (datas: FormProps) => {
     try {
-      createData_of_user({ ...data });
+      if (userData) {
+        updateData_of_user({ ...datas, id: userData.id });
+        router.push("/checkout/summary");
+        return;
+      }
+
+      createData_of_user({ ...datas });
       router.push("/checkout/summary");
     } catch (err) {
       console.log(err);
     }
   };
+
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)} noValidate>
       <Grid
@@ -161,7 +178,7 @@ export default function EditReviewForm({}: Props) {
               <Input
                 placeholder="Address 2"
                 size="md"
-                {...register("adress2")}
+                {...register("address2")}
               />
             </FormControl>
             <FormControl id="city" mt={4} isRequired borderColor="black">
@@ -246,6 +263,9 @@ export default function EditReviewForm({}: Props) {
           color="white"
           _hover={{ background: "rgb(0, 0, 0, 0.8)" }}
           type="submit"
+          onClick={() => {
+            getValues("name");
+          }}
         >
           Review Order
         </Button>

@@ -33,13 +33,13 @@ export default function ReviewData({}: Props) {
           Delivery Address
         </Text>
         <Text as="h3" fontFamily="less" fontWeight="light" sx={{ my: 2 }}>
-          {data?.address}
+          {`${data?.name} ${data?.lastname}`}
         </Text>
         <Text as="h3" fontFamily="less" fontWeight="light" sx={{ my: 2 }}>
-          29 Muir Blv, East Hampton, NY, 11937
+          {`${data?.address}, ${data?.city}, NY, ${data?.zipCode}`}
         </Text>
         <Text as="h3" fontFamily="less" fontWeight="light" sx={{ my: 2 }}>
-          United State
+          {`${data?.country}`}
         </Text>
         <Text as="h3" fontFamily="less" fontWeight="light" sx={{ my: 2 }}>
           {data?.telephone}

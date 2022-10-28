@@ -1,5 +1,5 @@
 import { Prisma, User } from "@prisma/client";
-import { GenerateCryptPassword } from "../../../utils";
+import { GenerateCryptPassword } from "../../utils";
 import { PrismaDB } from "../../db";
 
 export class UserAuth {

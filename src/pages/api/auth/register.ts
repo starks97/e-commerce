@@ -1,8 +1,8 @@
 import { NextApiResponse } from "next";
 
-import { methodSwitcher } from "../../../utils";
+import { methodSwitcher } from "../../../app/utils";
 
-import { Token} from "../../../utils";
+import { Token } from "../../../app/utils";
 import { Prisma } from "@prisma/client";
 
 import { isValidEmail } from "../../../utils";

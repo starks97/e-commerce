@@ -101,7 +101,11 @@ export default function WithSubnavigation() {
             <SearchInput />
 
             <NextLink href="/cart" passHref>
-              <Button size="sm" variant="none" style={{ color: "white" }}>
+              <Button
+                size="sm"
+                variant="none"
+                style={{ color: useColorModeValue("white", "white") }}
+              >
                 <Image
                   src={ShopCart}
                   layout="fill"

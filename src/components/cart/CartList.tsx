@@ -11,6 +11,7 @@ import { ICart } from "../../interfaces";
 
 interface Props {
   editable?: boolean;
+  product: Product
 }
 
 export default function CartList({ editable = false }: Props) {

@@ -1,8 +1,8 @@
-import { methodSwitcher } from "../../../utils";
+import { methodSwitcher } from "../../../app/utils";
 
 import { UserAuth } from "../../../app/backend/auth";
 
-import { Token } from "../../../utils";
+import { Token } from "../../../app/utils";
 import { NextApiResponse } from "next";
 
 type Data =
@@ -25,7 +25,6 @@ export default methodSwitcher({
 
       const { email = "", password = "" }: { email: string; password: string } =
         req.body;
-
 
       const user = await UserAuth.login(email, password);
 

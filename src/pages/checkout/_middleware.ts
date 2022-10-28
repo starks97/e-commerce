@@ -1,8 +1,7 @@
-import {NextResponse, NextRequest, NextFetchEvent} from 'next/server'
-import { Token } from "../../utils";
+import { NextResponse, NextRequest, NextFetchEvent } from "next/server";
+import { Token } from "../../app/utils";
 
-
-export async function middleware (req: NextRequest, even: NextFetchEvent) {
+export async function middleware(req: NextRequest, even: NextFetchEvent) {
   const { Ecommerce_token = "" } = req.cookies;
 
   try {

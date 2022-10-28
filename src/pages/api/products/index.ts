@@ -1,6 +1,6 @@
 import { Genders } from "@prisma/client";
 
-import { methodSwitcher } from "../../../utils";
+import { methodSwitcher } from "../../../app/utils";
 import { getAllProductsByGender } from "../../../app/backend/product";
 
 import {

@@ -1,6 +1,6 @@
 import { Product } from "@prisma/client";
 
-import { methodSwitcher } from "../../../utils";
+import { methodSwitcher } from "../../../app/utils";
 
 import { searchProducts } from "../../../app/backend/product/Product";
 
