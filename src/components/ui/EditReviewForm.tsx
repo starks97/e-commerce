@@ -45,7 +45,6 @@ export default function EditReviewForm({ userData }: UserDataProps) {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<FormProps>({
     defaultValues: {
@@ -263,9 +262,6 @@ export default function EditReviewForm({ userData }: UserDataProps) {
           color="white"
           _hover={{ background: "rgb(0, 0, 0, 0.8)" }}
           type="submit"
-          onClick={() => {
-            getValues("name");
-          }}
         >
           Review Order
         </Button>

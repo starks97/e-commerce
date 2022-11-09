@@ -49,8 +49,6 @@ type T = object;
 export default function Form({ labels, userData }: Props<UserData>) {
   const {
     register,
-    handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<FormProps>({
     defaultValues: {

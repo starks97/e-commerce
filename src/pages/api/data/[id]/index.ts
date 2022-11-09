@@ -31,6 +31,7 @@ export default methodSwitcher({
         country: string;
         address2: string;
       };
+      console.log(req.body);
 
       const data = await DataUser.UpdateDataUser(id, {
         name,
@@ -43,7 +44,6 @@ export default methodSwitcher({
         address2,
       });
 
-      console.log(data)
       if (!data) {
         return res.status(404).json({ message: "data not updated" });
       }

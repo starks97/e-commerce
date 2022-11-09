@@ -7,11 +7,10 @@ import { Navbar } from "../../components/navbar";
 import { EditReviewForm } from "../../components/ui";
 import { DataContext } from "../../context";
 
-
-import { UserData } from "@prisma/client";
-
 export default function AddressPage() {
   const { data } = useContext(DataContext);
+
+  console.log(data);
 
   return (
     <ShopLayout
@@ -26,7 +25,11 @@ export default function AddressPage() {
           </Text>
         </Flex>
 
-        {!data ? "" : <EditReviewForm userData={{id:"", userId: "", ...data}} />}
+        {!data ? (
+          ""
+        ) : (
+          <EditReviewForm userData={{ id: "", userId: "", ...data }} />
+        )}
       </Container>
     </ShopLayout>
   );
