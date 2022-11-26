@@ -1,3 +1,5 @@
+import React, { useContext, Suspense, useState, useEffect } from "react";
+
 import Link from "next/link";
 
 import {
@@ -10,14 +12,19 @@ import {
   Divider,
   Button,
 } from "@chakra-ui/react";
-import { IProduct } from "../../interfaces";
 
 import { CartList } from "../cart";
 import { OrderSummary } from "../cart";
-import ReviewData from "./ReviewData";
+
 import { Product } from "@prisma/client";
 import { CartContext } from "../../context";
-import { useContext } from "react";
+import { FullScreenLoading } from "../ui";
+
+const ReviewData = React.lazy(() => {
+  return new Promise((res) => {
+    setTimeout(() => res(import("./ReviewData")), 1500);
+  });
+});
 
 interface Props {
   product: Product;
@@ -60,7 +67,11 @@ export default function SummaryItems({ product }: Props) {
                 </Text>
               </Box>
               <Divider w="full" border="0.5px" borderColor="gray" />
-              <ReviewData />
+
+              <Suspense fallback={<FullScreenLoading />}>
+                <ReviewData />
+              </Suspense>
+
               <Flex justifyContent="end" alignItems="end" marginRight="1rem">
                 <Link href="/cart" passHref>
                   <Button variant="link" size="md">

@@ -1,24 +1,36 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import {
+  Box,
   Button,
   Flex,
   FormControl,
   FormLabel,
-  Grid,
-  GridItem,
   Input,
   InputGroup,
-  Select,
-  Spacer,
-  Stack,
+  InputProps,
 } from "@chakra-ui/react";
 
-import { useForm, useController, UseControllerProps } from "react-hook-form";
-import { UserData } from "@prisma/client";
-import ErrorMessage from "../ui/ErrorMessage";
+import {
+  UseFormRegister,
+  FieldValues,
+  Path,
+  DeepMap,
+  FieldError,
+  get,
+} from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
-type G = {};
+import { UserData } from "@prisma/client";
+//import ErrorMessage from "../ui/ErrorMessage";
+
+export type FormInputProps<TFormValues extends FieldValues> = {
+  name: Path<TFormValues>;
+  labels: FormLabels;
+  register?: UseFormRegister<TFormValues>;
+  rules?: Parameters<UseFormRegister<TFormValues>>[1];
+  errors?: Partial<DeepMap<TFormValues, FieldError>>;
+} & Omit<InputProps, "name">;
 
 export type FormProps = {
   name: string;
@@ -31,7 +43,7 @@ export type FormProps = {
   city: string;
 };
 
-enum FormLabels {
+export enum FormLabels {
   name = "Name",
   lastName = "Last Name",
   addres = "Address",
@@ -39,32 +51,27 @@ enum FormLabels {
   address2 = "Address 2",
   city = "City",
   zipCode = "ZipCode",
+  country = "Country"
 }
-interface Props<G extends UserData> {
+interface Props<G extends FormProps> {
   labels: FormLabels;
   userData: G;
+  children: ReactNode;
 }
-type T = object;
 
-export default function Form({ labels, userData }: Props<UserData>) {
-  const {
-    register,
-    formState: { errors },
-  } = useForm<FormProps>({
-    defaultValues: {
-      name: userData.name,
-      address: userData.address,
-      zipCode: userData.zipCode,
-      country: userData.country,
-      telephone: userData.telephone,
-      lastname: userData.lastname,
-      address2: userData.address2,
-      city: userData.city,
-    },
-    reValidateMode: "onChange",
-  });
+const Form = <TFormValues extends Record<string, unknown>>({
+  name,
+  register,
+  rules,
+  labels,
+  errors,
+  ...props
+}: FormInputProps<TFormValues>): JSX.Element => {
+  const errorMessages = get(errors, name);
+
+  const hasError = !!(errors && errorMessages);
   return (
-    <FormControl id="name" mt={4} isRequired borderColor="black">
+    <FormControl mt={4} isRequired borderColor="black">
       <FormLabel>{labels}</FormLabel>
       <InputGroup
         borderColor="black"
@@ -72,16 +79,24 @@ export default function Form({ labels, userData }: Props<UserData>) {
         alignItems="flex-start"
       >
         <Input
+          name={name}
+          {...props}
           size="md"
-          {...register("name", {
-            required: "this fild is require",
-          })}
-          aria-invalid={errors.name ? "true" : "false"}
+          {...(register && register(name, rules))}
+          aria-invalid={hasError}
         />
-        {errors.name?.type === "required" && (
-          <ErrorMessage>*Name is required</ErrorMessage>
-        )}
+        <ErrorMessage
+          errors={errors}
+          name={name as any}
+          render={({ message }) => (
+            <Box color="red" fontSize="md" textAlign="center" marginTop="1rem">
+              {message}
+            </Box>
+          )}
+        />
       </InputGroup>
     </FormControl>
   );
-}
+};
+
+export default Form;

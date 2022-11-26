@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import Link from "next/link";
 
 import {
@@ -10,12 +12,9 @@ import {
   Button,
   Divider,
 } from "@chakra-ui/react";
-import { DataContext, DataProps } from "../../context";
-import { useContext } from "react";
+import { DataContext } from "../../context";
 
-interface Props {}
-
-export default function ReviewData({}: Props) {
+export default function ReviewData() {
   const { data } = useContext(DataContext);
 
   return (

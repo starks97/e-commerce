@@ -4,13 +4,11 @@ import { useContext } from "react";
 import { ShopLayout } from "../../components/layouts";
 import { Navbar } from "../../components/navbar";
 
-import { EditReviewForm } from "../../components/ui";
+import { ReviewForm } from "../../components/form";
 import { DataContext } from "../../context";
 
 export default function AddressPage() {
   const { data } = useContext(DataContext);
-
-  console.log(data);
 
   return (
     <ShopLayout
@@ -25,11 +23,7 @@ export default function AddressPage() {
           </Text>
         </Flex>
 
-        {!data ? (
-          ""
-        ) : (
-          <EditReviewForm userData={{ id: "", userId: "", ...data }} />
-        )}
+        {!data ? "" : <ReviewForm userData={{ id: "", userId: "", ...data }} />}
       </Container>
     </ShopLayout>
   );
