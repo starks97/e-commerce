@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 
-import {
-  GetServerSideProps,
-  NextPage,
-  GetStaticPaths,
-  GetStaticProps,
-} from "next";
+import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 
 import { Product } from "@prisma/client";
 

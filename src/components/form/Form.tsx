@@ -2,8 +2,6 @@ import React, { ReactNode } from "react";
 
 import {
   Box,
-  Button,
-  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -51,7 +49,7 @@ export enum FormLabels {
   address2 = "Address 2",
   city = "City",
   zipCode = "ZipCode",
-  country = "Country"
+  country = "Country",
 }
 interface Props<G extends FormProps> {
   labels: FormLabels;
