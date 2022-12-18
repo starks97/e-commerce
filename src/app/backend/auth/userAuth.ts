@@ -2,6 +2,8 @@ import { Prisma, User } from "@prisma/client";
 import { GenerateCryptPassword } from "../../utils";
 import { PrismaDB } from "../../db";
 
+import { PrismaHandleException, ErrorCodesType } from "../../utils";
+
 export class UserAuth {
   static async registerUser({
     email,
@@ -29,15 +31,8 @@ export class UserAuth {
       });
       if (!data) return null;
       return data;
-    } catch (e) {
-      if (e instanceof Prisma.PrismaClientKnownRequestError) {
-        // The .code property can be accessed in a type-safe manner
-        if (e.code === "P2002") {
-          console.log(
-            "There is a unique constraint violation, a new user cannot be created with this email"
-          );
-        }
-      }
+    } catch (error) {
+      PrismaHandleException.handleError(error as ErrorCodesType);
     } finally {
       await PrismaDB.disconnect();
     }

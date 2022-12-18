@@ -19,6 +19,8 @@ import {
 
 import { AuthContext } from "../../context";
 
+import { ErrorMessage } from "../ui";
+
 export default function SimpleCard() {
   const { loginUser } = useContext(AuthContext);
 
@@ -31,6 +33,8 @@ export default function SimpleCard() {
 
   const [islogin, setIsLogin] = useState<boolean>(false);
 
+  const [error, setError] = useState<boolean>(false);
+
   const destination = router.query.p?.toString() || "/";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,14 +42,19 @@ export default function SimpleCard() {
     try {
       const response = await loginUser(data.email, data.password);
 
-      //redirect to page that user was trying to access
-     
+      if (!response) {
+        setIsLogin(false);
+        setError(!error);
 
-      if (response) {
-        setIsLogin(true);
-
-        router.replace(destination);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
+        return;
       }
+
+      setIsLogin(true);
+      setError(error);
+      router.replace(destination);
     } catch (err) {
       console.log(err);
     }
@@ -73,6 +82,12 @@ export default function SimpleCard() {
           p={8}
         >
           <Stack spacing={4}>
+            {error && (
+              <ErrorMessage>
+                {"Invalid email or password. Please check your info"}
+              </ErrorMessage>
+            )}
+
             <form onSubmit={handleSubmit}>
               <FormControl
                 id="email"

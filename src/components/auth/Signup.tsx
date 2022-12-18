@@ -1,5 +1,9 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+
+import { NextRouter, useRouter } from "next/router";
+
 import Link from "next/link";
 
 import {
@@ -18,10 +22,10 @@ import {
   Container,
 } from "@chakra-ui/react";
 
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { NextRouter, useRouter } from "next/router";
 import { AuthContext } from "../../context";
 import ErrorMessage from "../ui/ErrorMessage";
+
+import { isValidEmail } from "../../utils";
 
 export default function SignupCard() {
   const { registerUser } = useContext(AuthContext);
@@ -48,14 +52,23 @@ export default function SignupCard() {
       const response = await registerUser(data.email, data.password, data.name);
 
       if (
-        data.email.length === 0 ||
-        data.name.length === 0 ||
-        data.password.length === 0 ||
+        !isValidEmail(data.email) ||
+        data.name.length < 0 ||
+        data.password.length < 6 ||
+        response.hasError === true ||
         !response
       ) {
         setError(true);
         setIsRegister(false);
+
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
+        return;
       }
+
+      setError(false);
+      setIsRegister(true);
 
       router.replace(destination);
     } catch (err) {
@@ -65,7 +78,7 @@ export default function SignupCard() {
 
   useEffect(() => {
     router.prefetch(destination);
-  }, [])
+  });
 
   return (
     <Flex
@@ -88,6 +101,7 @@ export default function SignupCard() {
           p={8}
         >
           <Stack spacing={4}>
+            {error && <ErrorMessage>{"Email already register"}</ErrorMessage>}
             <form onSubmit={onRegisterForm} noValidate>
               <Box>
                 <FormControl id="Name" isRequired borderColor="gray">
@@ -164,11 +178,6 @@ export default function SignupCard() {
                   </Link>
                 </Text>
               </Stack>
-              {error && (
-                <ErrorMessage>
-                  You need to fill out the error message
-                </ErrorMessage>
-              )}
             </form>
           </Stack>
         </Box>

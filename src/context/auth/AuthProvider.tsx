@@ -7,6 +7,8 @@ import Cookies from "js-cookie";
 import { AuthContext, IUser } from "./AuthContext";
 import { authReducer } from "./authReducer";
 
+import { useAdvancedDataFetcher } from "../../utils/handleData";
+
 export interface AuthState {
   isLoggedIn: boolean;
   auth?: {
@@ -26,36 +28,37 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
   const token = Cookies.get("Ecommerce_token");
 
+  const data = useAdvancedDataFetcher<AuthState["auth"]>({
+    url: "/api/auth/validate_token",
+    method: "GET",
+  });
+
   const router = useRouter();
 
   useEffect(() => {
     checkToken();
-  }, []);
+  });
 
   const checkToken = async () => {
     if (!token!) return;
 
     try {
-      const response = await fetch("/api/auth/validate_token", {
+      const data = await fetch("/api/auth/validate_token", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
-      if (response.status === 200) {
-        const tokenChecked = await response.json();
 
-        const { user, token } = tokenChecked;
-        const { role, ...parsedUser } = user;
-
-        dispatch({
-          type: "[Auth] - Login",
-          payload: { token, user: { role, ...parsedUser } },
-        });
-        return;
+      if (!data.ok) {
+        throw new Error(data.statusText);
       }
+      const { token, user } = await data.json();
 
-      return response;
+      dispatch({
+        type: "[Auth] - Login",
+        payload: { token, user: { ...user } },
+      });
     } catch (err) {
-      console.log(err, "user not authenticated");
+      console.log(err);
       return null;
     }
   };
@@ -70,22 +73,19 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+
       if (!data.ok) {
-        return false;
+        throw new Error(data.statusText);
       }
-      const userLogged = await data.json();
-
-      const { user, token } = userLogged;
-
-      const { role, ...parsedUser } = user;
+      const { token, user } = await data.json();
 
       dispatch({
         type: "[Auth] - Login",
-        payload: { token, user: { role, ...parsedUser } },
+        payload: { token, user: { ...user } },
       });
       return true;
     } catch (err) {
-      console.log(err, "login not authenticated");
+      console.log(`${err}`);
       return false;
     }
   };
@@ -101,24 +101,21 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, name }),
       });
-      if (data.ok) {
-        const userRegistered = await data.json();
 
-        const { user, token } = userRegistered;
-
-        const { role, ...parsedUser } = user;
-
-        dispatch({
-          type: "[Auth] - Login",
-          payload: { token, user: { role, ...parsedUser } },
-        });
-        return { hasError: false };
+      if (!data.ok) {
+        return Promise.reject(`${data.statusText} `);
       }
-      console.log(data);
 
-      return { hasError: true };
+      const { user, token } = await data.json();
+
+      dispatch({
+        type: "[Auth] - Login",
+        payload: { token, user: { ...user } },
+      });
+
+      return { hasError: false };
     } catch (err) {
-      console.log(err, "register not authenticated");
+      console.log(err);
       return { hasError: true };
     }
   };

@@ -11,7 +11,7 @@ export default function Custom404({}: Props) {
   return (
     <ShopLayout
       title="Teslo | Page not Found"
-      pageDescription={"we couldnt fin the information"}
+      pageDescription={"we couldnt find the information"}
     >
       <Navbar />
       <Flex
