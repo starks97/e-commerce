@@ -36,7 +36,7 @@ export const DataProvider: FC<{ children: React.ReactNode }> = ({
       });
 
       if (!response.ok) {
-        throw new Error(response.statusText);
+        return console.log(response.statusText);
       }
 
       const data = await response.json();

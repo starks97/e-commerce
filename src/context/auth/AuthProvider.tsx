@@ -8,6 +8,7 @@ import { AuthContext, IUser } from "./AuthContext";
 import { authReducer } from "./authReducer";
 
 import { useAdvancedDataFetcher } from "../../utils/handleData";
+import { FetchEvent } from "next/dist/server/web/spec-compliant/fetch-event";
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -103,7 +104,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
       });
 
       if (!data.ok) {
-        return Promise.reject(`${data.statusText} `);
+        throw new Error(data.statusText);
       }
 
       const { user, token } = await data.json();
@@ -115,7 +116,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
 
       return { hasError: false };
     } catch (err) {
-      console.log(err);
+      console.log(`${err}`);
       return { hasError: true };
     }
   };

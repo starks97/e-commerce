@@ -19,7 +19,6 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Container,
 } from "@chakra-ui/react";
 
 import { AuthContext } from "../../context";
@@ -44,6 +43,13 @@ export default function SignupCard() {
     name: "",
   });
 
+  const RegisterErrors: string[] = [
+    "Email already exists, try a different email",
+    "Password must be at least 6 characters long",
+    "Name must be at least 3 characters long",
+    "Email format is not valid",
+  ];
+
   const destination = router.query.p?.toString() || "/";
 
   const onRegisterForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,7 +69,7 @@ export default function SignupCard() {
 
         setTimeout(() => {
           setError(false);
-        }, 3000);
+        }, 4000);
         return;
       }
 
@@ -101,7 +107,11 @@ export default function SignupCard() {
           p={8}
         >
           <Stack spacing={4}>
-            {error && <ErrorMessage>{"Email already register"}</ErrorMessage>}
+            {error && (
+              <ErrorMessage>
+                {"Email or password is incorrect please try again"}
+              </ErrorMessage>
+            )}
             <form onSubmit={onRegisterForm} noValidate>
               <Box>
                 <FormControl id="Name" isRequired borderColor="gray">

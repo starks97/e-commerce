@@ -44,13 +44,15 @@ export default methodSwitcher({
       }
 
       if (!isValidEmail(email)) {
-        return res.status(401).json({ message: "Email format is not valid " });
+        return res.status(401).json({ message: "Email format is not valid" });
       }
 
       const user = await UserAuth.registerUser(req.body);
 
       if (!user) {
-        return res.status(401).json({ message: "email already exists" });
+        return res
+          .status(401)
+          .json({ message: "Email already exists, try a different email" });
       }
 
       const token = await new Token(user.id, user.email).generateJWT();
