@@ -13,8 +13,6 @@ import Link from "next/link";
 
 import { Product } from "@prisma/client";
 
-import { IProduct } from "../../interfaces";
-
 import CartList from "./CartList";
 import OrderSummary from "./OrderSummary";
 

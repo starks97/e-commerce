@@ -8,7 +8,6 @@ import { AuthContext, IUser } from "./AuthContext";
 import { authReducer } from "./authReducer";
 
 import { useAdvancedDataFetcher } from "../../utils/handleData";
-import { FetchEvent } from "next/dist/server/web/spec-compliant/fetch-event";
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -67,7 +66,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
   const loginUser = async (
     email: string,
     password: string
-  ): Promise<boolean> => {
+  ): Promise<{ hasError: boolean; message?: string }> => {
     try {
       let data = await fetch("/api/auth/login", {
         method: "POST",
@@ -76,7 +75,8 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
       });
 
       if (!data.ok) {
-        throw new Error(data.statusText);
+        const { message } = await data.json();
+        return { hasError: true, message: message };
       }
       const { token, user } = await data.json();
 
@@ -84,10 +84,10 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
         type: "[Auth] - Login",
         payload: { token, user: { ...user } },
       });
-      return true;
-    } catch (err) {
-      console.log(`${err}`);
-      return false;
+      return { hasError: false };
+    } catch (error) {
+      console.log(`${error}`);
+      return { hasError: true };
     }
   };
 
@@ -95,7 +95,7 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
     email: string,
     password: string,
     name: string
-  ): Promise<{ hasError: boolean }> => {
+  ): Promise<{ hasError: boolean; message?: string }> => {
     try {
       let data = await fetch("/api/auth/register", {
         method: "POST",
@@ -104,7 +104,8 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
       });
 
       if (!data.ok) {
-        throw new Error(data.statusText);
+        const { message } = await data.json();
+        return { hasError: true, message };
       }
 
       const { user, token } = await data.json();
@@ -115,8 +116,8 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
       });
 
       return { hasError: false };
-    } catch (err) {
-      console.log(`${err}`);
+    } catch (error) {
+      console.log(`${error}`);
       return { hasError: true };
     }
   };

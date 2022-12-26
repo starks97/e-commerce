@@ -33,7 +33,7 @@ export default function SimpleCard() {
 
   const [islogin, setIsLogin] = useState<boolean>(false);
 
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string>("false");
 
   const destination = router.query.p?.toString() || "/";
 
@@ -42,18 +42,18 @@ export default function SimpleCard() {
     try {
       const response = await loginUser(data.email, data.password);
 
-      if (!response) {
+      if (response.hasError) {
         setIsLogin(false);
-        setError(!error);
+        setError(response.message as string);
 
         setTimeout(() => {
-          setError(false);
+          setError("");
         }, 3000);
         return;
       }
 
       setIsLogin(true);
-      setError(error);
+      setError("");
       router.replace(destination);
     } catch (err) {
       console.log(err);
@@ -82,11 +82,7 @@ export default function SimpleCard() {
           p={8}
         >
           <Stack spacing={4}>
-            {error && (
-              <ErrorMessage>
-                {"Invalid email or password. Please check your info"}
-              </ErrorMessage>
-            )}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
 
             <form onSubmit={handleSubmit}>
               <FormControl

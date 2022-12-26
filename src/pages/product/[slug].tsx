@@ -27,7 +27,7 @@ const ProductPage: NextPage<Props> = ({ product }: Props) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
-  const products: Product[] = (await getAllProducts()) as unknown as Product[];
+  const products: Product[] = (await getAllProducts()) as Product[];
   //const getSlugs = products.map((product) => product.slug);
   return {
     paths: products.map(({ slug }) => ({ params: { slug } })),

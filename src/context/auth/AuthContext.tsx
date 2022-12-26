@@ -16,12 +16,15 @@ interface IAuth {
     user: IUser;
     token: string;
   };
-  loginUser: (email: string, password: string) => Promise<boolean>;
+  loginUser: (
+    email: string,
+    password: string
+  ) => Promise<{ hasError: boolean; message?: string }>;
   registerUser: (
     email: string,
     password: string,
     name: string
-  ) => Promise<{ hasError: boolean }>;
+  ) => Promise<{ hasError: boolean; message?: string }>;
   logout: () => void;
 }
 

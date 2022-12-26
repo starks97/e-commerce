@@ -33,7 +33,7 @@ export default function SignupCard() {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const [isRegister, setIsRegister] = useState<boolean>(false);
 
@@ -43,13 +43,6 @@ export default function SignupCard() {
     name: "",
   });
 
-  const RegisterErrors: string[] = [
-    "Email already exists, try a different email",
-    "Password must be at least 6 characters long",
-    "Name must be at least 3 characters long",
-    "Email format is not valid",
-  ];
-
   const destination = router.query.p?.toString() || "/";
 
   const onRegisterForm = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,23 +50,17 @@ export default function SignupCard() {
     try {
       const response = await registerUser(data.email, data.password, data.name);
 
-      if (
-        !isValidEmail(data.email) ||
-        data.name.length < 0 ||
-        data.password.length < 6 ||
-        response.hasError === true ||
-        !response
-      ) {
-        setError(true);
+      if (response.hasError) {
+        setError(response.message as string);
         setIsRegister(false);
 
         setTimeout(() => {
-          setError(false);
+          setError("");
         }, 4000);
         return;
       }
 
-      setError(false);
+      setError("");
       setIsRegister(true);
 
       router.replace(destination);
@@ -107,11 +94,7 @@ export default function SignupCard() {
           p={8}
         >
           <Stack spacing={4}>
-            {error && (
-              <ErrorMessage>
-                {"Email or password is incorrect please try again"}
-              </ErrorMessage>
-            )}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             <form onSubmit={onRegisterForm} noValidate>
               <Box>
                 <FormControl id="Name" isRequired borderColor="gray">
