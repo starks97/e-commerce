@@ -13,10 +13,12 @@ import { DataReducer } from "./DataReducer";
 
 export interface DataState {
   data?: DataProps;
+  loading: boolean;
 }
 
 const DATA_INITIAL_STATE: DataState = {
   data: undefined,
+  loading: true
 };
 
 export const DataProvider: FC<{ children: React.ReactNode }> = ({

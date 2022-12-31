@@ -15,6 +15,7 @@ export interface DataProps {
 
 export interface DataContext {
   data?: DataProps;
+  loading: boolean;
   createData_of_user: ({ ...data }: DataProps) => Promise<boolean | null>;
   updateData_of_user: (
     data: Omit<UserData, "userId">

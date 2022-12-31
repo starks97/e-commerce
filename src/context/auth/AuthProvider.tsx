@@ -28,16 +28,16 @@ export const AuthProvider: FC<{ children: React.ReactNode }> = ({
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
   const token = Cookies.get("Ecommerce_token");
 
-  const data = useAdvancedDataFetcher<AuthState["auth"]>({
+  /*const data = useAdvancedDataFetcher<AuthState["auth"]>({
     url: "/api/auth/validate_token",
     method: "GET",
-  });
+  });*/
 
   const router = useRouter();
 
   useEffect(() => {
     checkToken();
-  });
+  }, []);
 
   const checkToken = async () => {
     if (!token!) return;

@@ -20,12 +20,13 @@ import { Product } from "@prisma/client";
 import { CartContext } from "../../context";
 import { FullScreenLoading } from "../ui";
 
-const ReviewData = React.lazy(() => {
+/*const ReviewData = React.lazy(() => {
   return new Promise((res) => {
     setTimeout(() => res(import("./ReviewData")), 1500);
   });
-});
+});*/
 
+import { ReviewData } from "../checkout";
 interface Props {
   product: Product;
 }
@@ -68,9 +69,10 @@ export default function SummaryItems({ product }: Props) {
               </Box>
               <Divider w="full" border="0.5px" borderColor="gray" />
 
-              <Suspense fallback={<FullScreenLoading />}>
+              {/*<Suspense fallback={<FullScreenLoading />}>
                 <ReviewData />
-              </Suspense>
+        </Suspense>*/}
+              <ReviewData />
 
               <Flex justifyContent="end" alignItems="end" marginRight="1rem">
                 <Link href="/cart" passHref>

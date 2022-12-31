@@ -33,7 +33,7 @@ export default function SimpleCard() {
 
   const [islogin, setIsLogin] = useState<boolean>(false);
 
-  const [error, setError] = useState<string>("false");
+  const [error, setError] = useState<string>("");
 
   const destination = router.query.p?.toString() || "/";
 
@@ -43,17 +43,17 @@ export default function SimpleCard() {
       const response = await loginUser(data.email, data.password);
 
       if (response.hasError) {
-        setIsLogin(false);
         setError(response.message as string);
+        setIsLogin(false);
 
         setTimeout(() => {
           setError("");
         }, 3000);
         return;
       }
-
-      setIsLogin(true);
       setError("");
+      setIsLogin(true);
+
       router.replace(destination);
     } catch (err) {
       console.log(err);
