@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import Head from "next/head";
 import React from "react";
 
 import { Product } from "@prisma/client";
 
+=======
+import  Head  from "next/head";
+import React from "react";
+
+>>>>>>> 779b262 (merge)
 interface Props {
   title: string;
   pageDescription: string;
@@ -28,7 +34,13 @@ export default function ShopLayout({
 
       <nav>{/*navbar*/}</nav>
 
+<<<<<<< HEAD
       <main>{children}</main>
+=======
+      <main style={{ margin: "20px auto", padding: "0px 20px" }}>
+        {children}
+      </main>
+>>>>>>> 779b262 (merge)
 
       <footer>{/*footer*/}</footer>
     </>

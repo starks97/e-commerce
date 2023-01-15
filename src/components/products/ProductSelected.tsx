@@ -1,11 +1,16 @@
+<<<<<<< HEAD
 import { useContext, useState } from "react";
 
 import { useRouter } from "next/router";
+=======
+import Link from "next/link";
+>>>>>>> 779b262 (merge)
 
 import {
   Flex,
   Grid,
   Container,
+<<<<<<< HEAD
   Text,
   GridItem,
   Button,
@@ -62,6 +67,20 @@ export default function ProductSelected({ product }: Props) {
     addProductToCart(tempCartProduct);
   };
 
+=======
+  Box,
+  Text,
+  GridItem,
+  Button,
+} from "@chakra-ui/react";
+
+import { initialData } from "../../database/products";
+import ProductSlideShow from "./ProductSlideShow";
+
+const product = initialData.products[0];
+
+export default function ProductSelected() {
+>>>>>>> 779b262 (merge)
   return (
     <Container maxW="80rem" marginTop={8}>
       <Grid
@@ -75,6 +94,7 @@ export default function ProductSelected({ product }: Props) {
         gap={5}
       >
         <GridItem minW="20rem">
+<<<<<<< HEAD
           {<ProductSlideShow images={product.images} />}
         </GridItem>
 
@@ -121,6 +141,47 @@ export default function ProductSelected({ product }: Props) {
                 Not available
               </Button>
             )}
+=======
+          <ProductSlideShow images={product.images} />
+        </GridItem>
+
+        <GridItem justifyContent="center" alignItems="center">
+          <Flex flexDirection="column">
+            <Text fontSize="xl" fontFamily="Less" fontWeight="bold">
+              {product.title}
+            </Text>
+            <br />
+            <Text as="sub" fontSize="lg">
+              {`$${product.price}`}
+            </Text>
+          </Flex>
+
+          {/*quantity */}
+          <Flex sx={{ my: 7 }}>
+            <Text fontSize="lg" fontFamily="Less">
+              quantity
+            </Text>
+            {/*Item Counter*/}
+          </Flex>
+
+          <Flex>
+            <Link href="/cart" passHref>
+              <Button
+                variant={"solid"}
+                bg="gray.500"
+                my={5}
+                size="md"
+                fontFamily="Less"
+                fontWeight="light"
+                fontSize="xl"
+                colorScheme="facebook"
+                color="white"
+                minW={{ sm: "100%", xl: "80%" }}
+              >
+                Add to cart
+              </Button>
+            </Link>
+>>>>>>> 779b262 (merge)
           </Flex>
 
           <Flex flexDirection="column">
@@ -141,6 +202,7 @@ export default function ProductSelected({ product }: Props) {
     </Container>
   );
 }
+<<<<<<< HEAD
 
 class GetProduct {
   static format(product: Product): ICart {
@@ -156,3 +218,5 @@ class GetProduct {
     };
   }
 }
+=======
+>>>>>>> 779b262 (merge)

@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+<<<<<<< HEAD
     "@hookform/error-message": "^2.0.1",
     "@prisma/client": "^4.0.0",
     "crypto-es": "^1.2.7",
@@ -37,6 +38,21 @@
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",
     "prisma": "^3.15.2",
+=======
+    "framer-motion": "^6",
+    "next": "12.1.6",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-icons": "^4.4.0",
+    "react-slideshow-image": "^3.7.5"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.42",
+    "@types/react": "18.0.12",
+    "@types/react-dom": "18.0.5",
+    "eslint": "8.17.0",
+    "eslint-config-next": "12.1.6",
+>>>>>>> 779b262 (merge)
     "typescript": "4.7.3"
   }
 }

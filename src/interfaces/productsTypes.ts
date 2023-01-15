@@ -1,5 +1,9 @@
 export interface IProduct {
+<<<<<<< HEAD
     _id?: string;
+=======
+    _id: string;
+>>>>>>> 779b262 (merge)
     description: string;
     images: string[];
     inStock: number;

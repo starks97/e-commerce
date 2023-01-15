@@ -60,7 +60,6 @@ export const theme = extendTheme({
         underline: "none",
       },
     },
-
     GlobalTypography: {
       styleOverrides: {
         h1: {

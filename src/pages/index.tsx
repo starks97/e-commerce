@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { NextPage, GetServerSideProps } from "next";
 
 import { Product } from "@prisma/client";
@@ -23,11 +24,32 @@ const Home: NextPage<Props> = ({ products, q }) => {
       ) : (
         <ProductCheck q={`${q}`} />
       )}
+=======
+import type { NextPage } from "next";
+
+import { ShopLayout } from "../components/layouts";
+import { Navbar } from "../components/navbar";
+import { initialData } from "../database/products";
+import { ProductList } from "../components/products";
+
+const Home: NextPage = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("clicked");
+  };
+
+  return (
+    <ShopLayout title="Teslo | Shop" pageDescription="Welcome our shop">
+      <Navbar />
+
+      <ProductList products={initialData.products as any} />
+>>>>>>> 779b262 (merge)
     </ShopLayout>
   );
 };
 
 export default Home;
+<<<<<<< HEAD
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { q = "" } = query as { q: string };
@@ -49,3 +71,5 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   };
 };
+=======
+>>>>>>> 779b262 (merge)

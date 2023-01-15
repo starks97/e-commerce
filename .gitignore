@@ -27,14 +27,20 @@ yarn-error.log*
 
 # local env files
 .env*.local
+<<<<<<< HEAD
 .dockerignore*
 next-env*
 docker-compose.yaml*
 .env*
+=======
+>>>>>>> 779b262 (merge)
 
 # vercel
 .vercel
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 779b262 (merge)
 # typescript
 *.tsbuildinfo
