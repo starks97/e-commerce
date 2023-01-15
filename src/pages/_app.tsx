@@ -1,5 +1,4 @@
 import { ChakraProvider, LightMode } from "@chakra-ui/react";
-<<<<<<< HEAD
 
 import { theme } from "../themes";
 
@@ -31,19 +30,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         </DataProvider>
       </AuthProvider>
     </SWRConfig>
-=======
-import { theme } from "../themes";
-import type { AppProps } from "next/app";
-import styles from "../styles/global.module.css";
-
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ChakraProvider resetCSS theme={theme}>
-      <LightMode>
-        <Component {...pageProps} />
-      </LightMode>
-    </ChakraProvider>
->>>>>>> 779b262 (merge)
   );
 }
 

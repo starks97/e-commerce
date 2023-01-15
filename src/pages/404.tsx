@@ -2,7 +2,7 @@ import React from "react";
 
 import { Flex, Text } from "@chakra-ui/react";
 
-import { ShopLayout } from "../components/layouts";
+import {ShopLayout } from "../components/layouts";
 import { Navbar } from "../components/navbar";
 
 type Props = {};
@@ -11,11 +11,7 @@ export default function Custom404({}: Props) {
   return (
     <ShopLayout
       title="Teslo | Page not Found"
-<<<<<<< HEAD
-      pageDescription={"we couldnt find the information"}
-=======
       pageDescription={"we couldnt fin the information"}
->>>>>>> 779b262 (merge)
     >
       <Navbar />
       <Flex
